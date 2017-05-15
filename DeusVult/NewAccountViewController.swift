@@ -43,6 +43,20 @@ class NewAccountViewController: UIViewController {
     
 
     @IBAction func newAccountButtonTouched(_ sender: UIButton) {
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        RealmManager.sharedInstance.connectToRealmDatabase(username: emailTextField.text!, password: passwordTextField.text!, register: true, viewControllerHandler: self) { 
+            let personalInfo = PersonalInfo()
+            personalInfo.height = Float(self.heightTextField.text!)!
+            personalInfo.weight = Float(self.weightTextField.text!)!
+            personalInfo.name = self.nameTextField.text!
+            try! RealmManager.sharedInstance.realm!.write {
+                RealmManager.sharedInstance.realm!.add(personalInfo)
+            }
+            MBProgressHUD.hide(for: self.view, animated: true)
+            let mapViewController = self.storyboard!.instantiateViewController(withIdentifier: "navigationController")
+            self.show(mapViewController, sender: nil)
+            
+        }
     }
    
     func setupRx() {

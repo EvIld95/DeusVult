@@ -26,6 +26,7 @@
 		F7B6FC8C1EC8E8C000F59703 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC8B1EC8E8C000F59703 /* Helpers.swift */; };
 		F7B6FC8E1EC8E95200F59703 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC8D1EC8E95200F59703 /* Double+Extension.swift */; };
 		F7B6FC901EC9ECC500F59703 /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC8F1EC9ECC500F59703 /* NewAccountViewController.swift */; };
+		F7B6FC921EC9FE3900F59703 /* PersonalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC911EC9FE3900F59703 /* PersonalInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		F7B6FC8B1EC8E8C000F59703 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		F7B6FC8D1EC8E95200F59703 /* Double+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		F7B6FC8F1EC9ECC500F59703 /* NewAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAccountViewController.swift; sourceTree = "<group>"; };
+		F7B6FC911EC9FE3900F59703 /* PersonalInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 			children = (
 				F7452B501EC8A78700218A7C /* Run.swift */,
 				F7452B521EC8A7A400218A7C /* LocationRM.swift */,
+				F7B6FC911EC9FE3900F59703 /* PersonalInfo.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 				F7B6FC901EC9ECC500F59703 /* NewAccountViewController.swift in Sources */,
 				F7B6FC8C1EC8E8C000F59703 /* Helpers.swift in Sources */,
 				F7452B551EC8D89200218A7C /* GameTypeViewController.swift in Sources */,
+				F7B6FC921EC9FE3900F59703 /* PersonalInfo.swift in Sources */,
 				F7452B2E1EC87C5100218A7C /* AppDelegate.swift in Sources */,
 				F7452B491EC88E0100218A7C /* SoundPlayerManager.swift in Sources */,
 				F7B6FC8E1EC8E95200F59703 /* Double+Extension.swift in Sources */,
