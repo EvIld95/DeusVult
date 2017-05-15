@@ -1,0 +1,336 @@
+//
+//  MapViewController.swift
+//  DeusVult
+//
+//  Created by Paweł Szudrowicz on 14.05.2017.
+//  Copyright © 2017 Paweł Szudrowicz. All rights reserved.
+//
+
+import UIKit
+import MapKit
+import CoreLocation
+import RxCocoa
+import RxSwift
+import MBProgressHUD
+
+class MapViewController: UIViewController {
+
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var distanceLabel: UILabel!
+    @IBOutlet weak var speedLabel: UILabel!
+    @IBOutlet weak var paceLabel: UILabel!
+    @IBOutlet weak var caloriesLabel: UILabel!
+    @IBOutlet weak var startButton: DeusVultButton!
+    @IBOutlet weak var viewWithButtons: UIView!
+    @IBOutlet weak var viewWithStats: UIView!
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var stopButton: DeusVultButton!
+    
+    var firstView: UIView!
+    var lastView: UIView!
+    var savedLocations = [CLLocation]()
+    var timer = Timer()
+    var locationManager = CLLocationManager()
+    var run : Run!
+    var finish = Variable<Bool>(false)
+    var running = false
+    var isSignalStrength = Variable<Bool>(false)
+    let gpsSignalAccuracy = 20.0
+    let checkForGoodGPSSignal = false
+    var hud: MBProgressHUD!
+    let disposeBag = DisposeBag()
+    
+    var seconds = 0 {
+        didSet {
+            let (hours, minutes, sec) = secondsToHoursMinutesSeconds(seconds: self.seconds)
+            var displayTimeText = (hours > 0) ? "\(hours) h " : ""
+            displayTimeText += (minutes > 0) ? "\(minutes) min " : ""
+            displayTimeText += "\(sec) sec"
+            self.timeLabel.text = displayTimeText
+        }
+    }
+    
+    var distance = 0.0 {
+        didSet {
+            distanceLabel.text = "\(distance.roundTo(places: 2)) m"
+        }
+    }
+    
+    var pace = 0.0 {
+        didSet {
+            paceLabel.text = "\(pace.roundTo(places: 2)) km/h"
+        }
+    }
+    
+    var currentSpeed = 0.0 {
+        didSet {
+            speedLabel.text = "\(currentSpeed.roundTo(places: 2)) km/h"
+        }
+    }
+    
+    var calories = 0.0 {
+        didSet {
+            caloriesLabel.text = "\(calories.roundTo(places: 1)) cal"
+        }
+    }
+    
+
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        run = Run()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        timer.invalidate()
+    }
+
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.initSetup()
+        self.setupRx()
+        self.setupViews()
+        self.setupLocationManager()
+        mapView.delegate = self
+        
+        
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    func viewTransition() {
+        UIView.transition(from: self.firstView, to: self.lastView, duration: 0.5, options: .transitionFlipFromLeft) { (_) in
+            let tempView = self.lastView
+            self.lastView = self.firstView
+            self.firstView = tempView
+        }
+    }
+    
+    func setupLocationManager() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.activityType = .fitness
+        locationManager.distanceFilter = 3.0
+        locationManager.requestAlwaysAuthorization()
+    }
+    
+    func setupViews() {
+        self.firstView = viewWithButtons
+        self.lastView = viewWithStats
+        self.stopButton.borderButtonColor = UIColor.darkGray
+        self.stopButton.backgroundColor = UIColor.red
+        isSignalStrength.value = false
+    }
+    
+    func initSetup() {
+        seconds = 0
+        distance = 0.0
+        pace = 0.0
+        currentSpeed = 0.0
+        calories = 0.0
+        savedLocations.removeAll(keepingCapacity: false)
+    }
+    
+    func setupRx() {
+        finish.asObservable().subscribe(onNext: { (finished) in
+            if(finished == true) {
+                self.timer.invalidate()
+                self.locationManager.stopUpdatingLocation()
+            }
+        }).addDisposableTo(disposeBag)
+        
+        if(checkForGoodGPSSignal) {
+            isSignalStrength.asObservable().subscribe(onNext: { (strength) in
+                if(strength == true) {
+                    self.startButton.isEnabled = true
+                    self.startButton.alpha = 1.0
+                    self.hud.isHidden = true
+                } else {
+                    if(self.running == false) {
+                        if(self.hud == nil) {
+                            self.hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                            self.hud.label.text = "Searching for GPS signal"
+                        }
+                        
+                        self.startButton.isEnabled = false
+                        self.startButton.alpha = 0.5
+                        self.hud.isHidden = false
+                    }
+                }
+            }).addDisposableTo(disposeBag)
+        }
+        
+    }
+    
+    func eachSecond(timer: Timer) {
+        self.seconds+=1
+        self.pace = (self.distance / Double(self.seconds)) * 3.6
+        self.calories = calculateBurnedCalories(avgSpeed: self.pace, seconds: self.seconds, weight: 72.0)
+    }
+    
+    @IBAction func startButtonTapped(sender: UIButton!) {
+        timer = Timer.scheduledTimer(timeInterval: 1,
+                                     target: self,
+                                     selector: #selector(eachSecond(timer:)),
+                                     userInfo: nil,
+                                     repeats: true)
+        
+        stopButton.isHidden = false
+        viewTransition()
+        running = true
+    }
+    
+    @IBAction func stopButtonTapped(sender: UIButton!) {
+        finish.value = true
+        running = false
+        if(savedLocations.count > 0) {
+            self.loadMap()
+            run.averageSpeed = pace
+            run.date = Date()
+            run.distance = distance
+            run.time = seconds
+            run.maxSpeed = 10
+            
+            try! RealmManager.sharedInstance.realm!.write {
+                RealmManager.sharedInstance.realm!.add(run)
+            }
+        }
+    }
+    
+}
+
+
+
+
+
+
+extension MapViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        print("DidChangeAuthorization")
+        if status == .authorizedAlways {
+            print("AuthorizationAlways")
+            mapView.showsUserLocation = true
+            locationManager.startUpdatingLocation()
+        }
+        
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let gpsAccuracy = checkForGoodGPSSignal == true ? gpsSignalAccuracy : 1000.0
+        let newLocation = locations.last!
+        print("\(newLocation.horizontalAccuracy) | \(locationManager.desiredAccuracy)")
+        
+        if newLocation.timestamp.timeIntervalSinceNow < -5 {
+            return
+        }
+        
+        if newLocation.horizontalAccuracy < 0 {
+            return
+        }
+        if newLocation.horizontalAccuracy < gpsAccuracy {
+            if running {
+                if self.savedLocations.count > 0 {
+                    distance += newLocation.distance(from: self.savedLocations.last!)
+                }
+                print("Saved location")
+                if(newLocation.speed > 0) {
+                    self.currentSpeed = newLocation.speed * 3.6
+                }
+                let locationRM = LocationRM()
+                locationRM.latitude = newLocation.coordinate.latitude
+                locationRM.longitude = newLocation.coordinate.longitude
+                locationRM.speed = newLocation.speed
+                
+                run.locations.append(locationRM)
+                self.savedLocations.append(newLocation)
+            }
+            
+            isSignalStrength.value = true
+        } else {
+            isSignalStrength.value = false
+        }
+        
+        
+        
+        let center = CLLocationCoordinate2D(latitude: newLocation.coordinate.latitude, longitude: newLocation.coordinate.longitude)
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+        mapView.setRegion(region, animated: true)
+        
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
+    }
+}
+
+
+
+
+
+
+extension MapViewController: MKMapViewDelegate {
+    
+    func mapRegion() -> MKCoordinateRegion {
+        let initialLoc = savedLocations.first!
+        
+        var minLat = initialLoc.coordinate.latitude
+        var minLng = initialLoc.coordinate.longitude
+        var maxLat = minLat
+        var maxLng = minLng
+        
+        for location in savedLocations {
+            minLat = min(minLat, location.coordinate.latitude)
+            minLng = min(minLng, location.coordinate.longitude)
+            maxLat = max(maxLat, location.coordinate.latitude)
+            maxLng = max(maxLng, location.coordinate.longitude)
+        }
+        
+        return MKCoordinateRegion(
+            center: CLLocationCoordinate2D(latitude: (minLat + maxLat)/2,
+                                           longitude: (minLng + maxLng)/2),
+            span: MKCoordinateSpan(latitudeDelta: (maxLat - minLat)*1.1,
+                                   longitudeDelta: (maxLng - minLng)*1.1))
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let polyline = overlay as! MKPolyline
+        
+        let renderer = MKPolylineRenderer(polyline: polyline)
+        renderer.strokeColor = UIColor.red
+        renderer.lineCap = .round
+        
+        renderer.lineWidth = 2
+        return renderer
+    }
+    
+    
+    func polyline() -> MKPolyline {
+        var coords = [CLLocationCoordinate2D]()
+        
+        for location in savedLocations {
+            coords.append(location.coordinate)
+        }
+        
+        return MKPolyline(coordinates: &coords, count: savedLocations.count)
+    }
+    
+    func loadMap() {
+        if savedLocations.count > 0 {
+            mapView.region = mapRegion()
+            mapView.add(polyline())
+        } else {
+            print("ERROR with map")
+        }
+    }
+}
+
+
+

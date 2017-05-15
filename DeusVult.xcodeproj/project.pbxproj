@@ -9,12 +9,23 @@
 /* Begin PBXBuildFile section */
 		F0665756B3D669910979197F /* Pods_DeusVult.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2984DD24907563E2C00C3B1D /* Pods_DeusVult.framework */; };
 		F7452B2E1EC87C5100218A7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7452B2D1EC87C5100218A7C /* AppDelegate.swift */; };
-		F7452B301EC87C5100218A7C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7452B2F1EC87C5100218A7C /* ViewController.swift */; };
+		F7452B301EC87C5100218A7C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7452B2F1EC87C5100218A7C /* LoginViewController.swift */; };
 		F7452B331EC87C5100218A7C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7452B311EC87C5100218A7C /* Main.storyboard */; };
 		F7452B351EC87C5100218A7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7452B341EC87C5100218A7C /* Assets.xcassets */; };
 		F7452B381EC87C5100218A7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7452B361EC87C5100218A7C /* LaunchScreen.storyboard */; };
-		F7452B411EC8824A00218A7C /* GreenButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7452B401EC8824A00218A7C /* GreenButton.swift */; };
+		F7452B411EC8824A00218A7C /* DeusVultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7452B401EC8824A00218A7C /* DeusVultButton.swift */; };
 		F7452B431EC8849700218A7C /* UIColor+Extenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7452B421EC8849700218A7C /* UIColor+Extenstion.swift */; };
+		F7452B471EC88C9300218A7C /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7452B461EC88C9300218A7C /* RealmManager.swift */; };
+		F7452B491EC88E0100218A7C /* SoundPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7452B481EC88E0100218A7C /* SoundPlayerManager.swift */; };
+		F7452B4B1EC8988D00218A7C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7452B4A1EC8988D00218A7C /* MapKit.framework */; };
+		F7452B4F1EC8A72200218A7C /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7452B4E1EC8A72200218A7C /* MapViewController.swift */; };
+		F7452B511EC8A78700218A7C /* Run.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7452B501EC8A78700218A7C /* Run.swift */; };
+		F7452B531EC8A7A400218A7C /* LocationRM.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7452B521EC8A7A400218A7C /* LocationRM.swift */; };
+		F7452B551EC8D89200218A7C /* GameTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7452B541EC8D89200218A7C /* GameTypeViewController.swift */; };
+		F7452B571EC8D9D500218A7C /* Explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F7452B561EC8D9D500218A7C /* Explosion.mp3 */; };
+		F7B6FC8C1EC8E8C000F59703 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC8B1EC8E8C000F59703 /* Helpers.swift */; };
+		F7B6FC8E1EC8E95200F59703 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC8D1EC8E95200F59703 /* Double+Extension.swift */; };
+		F7B6FC901EC9ECC500F59703 /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC8F1EC9ECC500F59703 /* NewAccountViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,13 +34,24 @@
 		C4FFD2884768EDB0509783AE /* Pods-DeusVult.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeusVult.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DeusVult/Pods-DeusVult.debug.xcconfig"; sourceTree = "<group>"; };
 		F7452B2A1EC87C5100218A7C /* DeusVult.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeusVult.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7452B2D1EC87C5100218A7C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F7452B2F1EC87C5100218A7C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F7452B2F1EC87C5100218A7C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		F7452B321EC87C5100218A7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F7452B341EC87C5100218A7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F7452B371EC87C5100218A7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F7452B391EC87C5100218A7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F7452B401EC8824A00218A7C /* GreenButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreenButton.swift; sourceTree = "<group>"; };
+		F7452B401EC8824A00218A7C /* DeusVultButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeusVultButton.swift; sourceTree = "<group>"; };
 		F7452B421EC8849700218A7C /* UIColor+Extenstion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extenstion.swift"; sourceTree = "<group>"; };
+		F7452B461EC88C9300218A7C /* RealmManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		F7452B481EC88E0100218A7C /* SoundPlayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundPlayerManager.swift; sourceTree = "<group>"; };
+		F7452B4A1EC8988D00218A7C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		F7452B4E1EC8A72200218A7C /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		F7452B501EC8A78700218A7C /* Run.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Run.swift; sourceTree = "<group>"; };
+		F7452B521EC8A7A400218A7C /* LocationRM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationRM.swift; sourceTree = "<group>"; };
+		F7452B541EC8D89200218A7C /* GameTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTypeViewController.swift; sourceTree = "<group>"; };
+		F7452B561EC8D9D500218A7C /* Explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Explosion.mp3; sourceTree = "<group>"; };
+		F7B6FC8B1EC8E8C000F59703 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		F7B6FC8D1EC8E95200F59703 /* Double+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
+		F7B6FC8F1EC9ECC500F59703 /* NewAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAccountViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7452B4B1EC8988D00218A7C /* MapKit.framework in Frameworks */,
 				F0665756B3D669910979197F /* Pods_DeusVult.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -47,6 +70,7 @@
 		4177976CC334BC507F12685F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F7452B4A1EC8988D00218A7C /* MapKit.framework */,
 				2984DD24907563E2C00C3B1D /* Pods_DeusVult.framework */,
 			);
 			name = Frameworks;
@@ -82,15 +106,18 @@
 		F7452B2C1EC87C5100218A7C /* DeusVult */ = {
 			isa = PBXGroup;
 			children = (
+				F7B6FC8A1EC8E8A800F59703 /* Helpers */,
+				F7452B4D1EC8A6E100218A7C /* Models */,
+				F7452B4C1EC8A6D800218A7C /* Controllers */,
 				F7452B451EC888A200218A7C /* Managers */,
-				F7452B441EC8849E00218A7C /* Constants */,
+				F7452B441EC8849E00218A7C /* Extensions */,
 				F7452B3F1EC8821B00218A7C /* Buttons */,
 				F7452B2D1EC87C5100218A7C /* AppDelegate.swift */,
-				F7452B2F1EC87C5100218A7C /* ViewController.swift */,
 				F7452B311EC87C5100218A7C /* Main.storyboard */,
 				F7452B341EC87C5100218A7C /* Assets.xcassets */,
 				F7452B361EC87C5100218A7C /* LaunchScreen.storyboard */,
 				F7452B391EC87C5100218A7C /* Info.plist */,
+				F7452B561EC8D9D500218A7C /* Explosion.mp3 */,
 			);
 			path = DeusVult;
 			sourceTree = "<group>";
@@ -98,24 +125,55 @@
 		F7452B3F1EC8821B00218A7C /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
-				F7452B401EC8824A00218A7C /* GreenButton.swift */,
+				F7452B401EC8824A00218A7C /* DeusVultButton.swift */,
 			);
 			name = Buttons;
 			sourceTree = "<group>";
 		};
-		F7452B441EC8849E00218A7C /* Constants */ = {
+		F7452B441EC8849E00218A7C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				F7452B421EC8849700218A7C /* UIColor+Extenstion.swift */,
+				F7B6FC8D1EC8E95200F59703 /* Double+Extension.swift */,
 			);
-			name = Constants;
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		F7452B451EC888A200218A7C /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				F7452B461EC88C9300218A7C /* RealmManager.swift */,
+				F7452B481EC88E0100218A7C /* SoundPlayerManager.swift */,
 			);
 			name = Managers;
+			sourceTree = "<group>";
+		};
+		F7452B4C1EC8A6D800218A7C /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F7452B2F1EC87C5100218A7C /* LoginViewController.swift */,
+				F7452B4E1EC8A72200218A7C /* MapViewController.swift */,
+				F7452B541EC8D89200218A7C /* GameTypeViewController.swift */,
+				F7B6FC8F1EC9ECC500F59703 /* NewAccountViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		F7452B4D1EC8A6E100218A7C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F7452B501EC8A78700218A7C /* Run.swift */,
+				F7452B521EC8A7A400218A7C /* LocationRM.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		F7B6FC8A1EC8E8A800F59703 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				F7B6FC8B1EC8E8C000F59703 /* Helpers.swift */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -155,6 +213,14 @@
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = 276JFTHA68;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -184,6 +250,7 @@
 				F7452B381EC87C5100218A7C /* LaunchScreen.storyboard in Resources */,
 				F7452B351EC87C5100218A7C /* Assets.xcassets in Resources */,
 				F7452B331EC87C5100218A7C /* Main.storyboard in Resources */,
+				F7452B571EC8D9D500218A7C /* Explosion.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,10 +309,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7452B301EC87C5100218A7C /* ViewController.swift in Sources */,
-				F7452B411EC8824A00218A7C /* GreenButton.swift in Sources */,
+				F7452B301EC87C5100218A7C /* LoginViewController.swift in Sources */,
+				F7452B511EC8A78700218A7C /* Run.swift in Sources */,
+				F7452B411EC8824A00218A7C /* DeusVultButton.swift in Sources */,
+				F7452B471EC88C9300218A7C /* RealmManager.swift in Sources */,
+				F7B6FC901EC9ECC500F59703 /* NewAccountViewController.swift in Sources */,
+				F7B6FC8C1EC8E8C000F59703 /* Helpers.swift in Sources */,
+				F7452B551EC8D89200218A7C /* GameTypeViewController.swift in Sources */,
 				F7452B2E1EC87C5100218A7C /* AppDelegate.swift in Sources */,
+				F7452B491EC88E0100218A7C /* SoundPlayerManager.swift in Sources */,
+				F7B6FC8E1EC8E95200F59703 /* Double+Extension.swift in Sources */,
+				F7452B531EC8A7A400218A7C /* LocationRM.swift in Sources */,
 				F7452B431EC8849700218A7C /* UIColor+Extenstion.swift in Sources */,
+				F7452B4F1EC8A72200218A7C /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,6 +447,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 276JFTHA68;
 				INFOPLIST_FILE = DeusVult/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pawelszudowicz.DeusVult;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -385,6 +462,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 276JFTHA68;
 				INFOPLIST_FILE = DeusVult/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pawelszudowicz.DeusVult;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -411,6 +489,7 @@
 				F7452B3E1EC87C5100218A7C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

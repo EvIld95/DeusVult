@@ -9,14 +9,14 @@
 import UIKit
 
 @IBDesignable
-class GreenButton: UIButton {
-    @IBInspectable var loginButtonColor: UIColor!  {
+class DeusVultButton: UIButton {
+    @IBInspectable var backgroundButtonColor: UIColor! = UIColor.deusVultLightGreen {
         didSet {
-            self.layer.backgroundColor = loginButtonColor.cgColor
+            self.layer.backgroundColor = backgroundButtonColor.cgColor
         }
     }
     
-    @IBInspectable var borderButtonColor: UIColor! {
+    @IBInspectable var borderButtonColor: UIColor! = UIColor.deusVultGreen {
         didSet {
             self.layer.borderColor = borderButtonColor.cgColor
         }
@@ -24,9 +24,9 @@ class GreenButton: UIButton {
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        self.layer.backgroundColor =  UIColor.deusVultLightGreen.cgColor
+        self.layer.backgroundColor =  backgroundButtonColor.cgColor
         self.layer.borderWidth = 3
-        self.layer.borderColor = UIColor.deusVultGreen.cgColor
+        self.layer.borderColor = borderButtonColor.cgColor
         self.layer.cornerRadius = self.frame.height / 2
     }
     

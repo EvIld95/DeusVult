@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>IHKeyboardAvoiding.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -36,6 +41,42 @@
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
-	<dict/>
+	<dict>
+		<key>033B2F5EFC98402794E5FA4A2E42BD9F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>20EAC6DA09CECA22B6AAE08A0C22D41A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3F825AA773E59DB65ACB818B4CE671FE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>41FA54D12162DAD51D02FC58A2CD5034</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>86428BDA4DC13E16A35B678CD4BE8BF0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8CE55FE1E6F29A02CDCE4CD2FF37BC31</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A453479CD16F96FB3FA37B0F43A8BB5D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
 </dict>
 </plist>
