@@ -12,6 +12,7 @@ import CoreLocation
 import RxCocoa
 import RxSwift
 import MBProgressHUD
+import RealmSwift
 
 class MapViewController: UIViewController {
 
@@ -31,6 +32,7 @@ class MapViewController: UIViewController {
     var lastView: UIView!
     var savedLocations = [CLLocation]()
     var timer = Timer()
+    var timerUpdatesAllUserPosition = Timer()
     var locationManager = CLLocationManager()
     var run : Run!
     var finish = Variable<Bool>(false)
@@ -39,8 +41,11 @@ class MapViewController: UIViewController {
     let gpsSignalAccuracy = 20.0
     let checkForGoodGPSSignal = false
     var hud: MBProgressHUD!
+    var userPositionDict = Dictionary<String, CLLocation>()
+    var userAnnotationDict = Dictionary<String, MKAnnotation>()
     let disposeBag = DisposeBag()
-    
+    var realmUserLocation: Results<UserLocations>!
+    //var currentUser : String!
     var seconds = 0 {
         didSet {
             let (hours, minutes, sec) = secondsToHoursMinutesSeconds(seconds: self.seconds)
@@ -91,13 +96,24 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.realmUserLocation = RealmManager.sharedInstance.realmPublic!.objects(UserLocations.self)
         self.initSetup()
         self.setupRx()
         self.setupViews()
         self.setupLocationManager()
         mapView.delegate = self
         
+      
+        //print(SyncUser.all)
+        //print("Current user \(RealmManager.sharedInstance.currentLoggedUser!.identity!)")
         
+        //print(RealmManager.sharedInstance.realmPublic!.objects(UserLocations.self))
+        
+//        let annotation = DeusVultPointAnnotation()
+//        annotation.coordinate = CLLocationCoordinate2D(latitude: 50.0, longitude: 10.0)
+//        annotation.title = "Location"
+//       
+//        mapView.addAnnotation(annotation)
     }
 
     override func didReceiveMemoryWarning() {
@@ -142,6 +158,7 @@ class MapViewController: UIViewController {
         finish.asObservable().subscribe(onNext: { (finished) in
             if(finished == true) {
                 self.timer.invalidate()
+                self.timerUpdatesAllUserPosition.invalidate()
                 self.locationManager.stopUpdatingLocation()
             }
         }).addDisposableTo(disposeBag)
@@ -175,10 +192,65 @@ class MapViewController: UIViewController {
         self.calories = calculateBurnedCalories(avgSpeed: self.pace, seconds: self.seconds, weight: 72.0)
     }
     
+    func updatesAllUsersPosition() {
+        print("updateAllUserPosition")
+        //print(RealmManager.sharedInstance.realmPublic!.objects(UserLocations.self))
+        print(realmUserLocation);
+        getUsersLocation()
+        addUsersPositionToMapView()
+    }
+    
+    func getUsersLocation() {
+        let userID = RealmManager.sharedInstance.currentLoggedUser!.identity! //SyncUser.current!.identity!
+        let predicate = NSPredicate(format: "userID != %@", userID)
+        let userLocations = realmUserLocation.filter(predicate)
+        print(userLocations)
+        for userLocation in userLocations {
+            userPositionDict[userLocation.userID] = userLocation.location
+        }
+    }
+    
+    func addUsersPositionToMapView() {
+        for position in userPositionDict {
+            if let dvAnnotation = getUserAnnotationFromMapView(userID: position.key) {
+                dvAnnotation.coordinate = position.value.coordinate
+            } else {
+                let annotation = DeusVultPointAnnotation()
+                annotation.coordinate = position.value.coordinate
+                annotation.title = "Location"
+                annotation.id = position.key
+                mapView.addAnnotation(annotation)
+            }
+        }
+    }
+    
+    func getUserAnnotationFromMapView(userID: String) -> DeusVultPointAnnotation? {
+        let annotations = mapView.annotations
+        return annotations.filter { (pointAnnotation) -> Bool in
+            guard let dvPointAnnotation = pointAnnotation as? DeusVultPointAnnotation else {
+                return false
+            }
+            
+            if dvPointAnnotation.id == nil {
+                return false
+            }
+            else {
+                return dvPointAnnotation.id == userID
+            }
+        }.first as? DeusVultPointAnnotation
+    }
+    
     @IBAction func startButtonTapped(sender: UIButton!) {
         timer = Timer.scheduledTimer(timeInterval: 1,
                                      target: self,
                                      selector: #selector(eachSecond(timer:)),
+                                     userInfo: nil,
+                                     repeats: true)
+        
+        
+        timerUpdatesAllUserPosition = Timer.scheduledTimer(timeInterval: 3,
+                                     target: self,
+                                     selector: #selector(updatesAllUsersPosition),
                                      userInfo: nil,
                                      repeats: true)
         
@@ -192,13 +264,13 @@ class MapViewController: UIViewController {
         running = false
         if(savedLocations.count > 0) {
             self.loadMap()
-            run.averageSpeed = pace
-            run.date = Date()
-            run.distance = distance
-            run.time = seconds
-            run.maxSpeed = 10
-            
+        
             try! RealmManager.sharedInstance.realm!.write {
+                run.averageSpeed = pace
+                run.date = Date()
+                run.distance = distance
+                run.time = seconds
+                run.maxSpeed = 10
                 RealmManager.sharedInstance.realm!.add(run)
             }
         }
@@ -235,8 +307,14 @@ extension MapViewController: CLLocationManagerDelegate {
         if newLocation.horizontalAccuracy < 0 {
             return
         }
+        
+        if newLocation.speed < 0 {
+            return
+        }
+        
         if newLocation.horizontalAccuracy < gpsAccuracy {
             if running {
+                
                 if self.savedLocations.count > 0 {
                     distance += newLocation.distance(from: self.savedLocations.last!)
                 }
@@ -249,6 +327,25 @@ extension MapViewController: CLLocationManagerDelegate {
                 locationRM.longitude = newLocation.coordinate.longitude
                 locationRM.speed = newLocation.speed
                 
+                
+                let userID = RealmManager.sharedInstance.currentLoggedUser!.identity!//SyncUser.current!.identity
+                let predicate = NSPredicate(format: "userID == %@", userID)
+                let userPos = realmUserLocation.filter(predicate).first
+                if let userLoc = userPos {
+                    try! RealmManager.sharedInstance.realmPublic!.write {
+                        userLoc.latitude = newLocation.coordinate.latitude
+                        userLoc.longitude = newLocation.coordinate.longitude
+                    }
+                } else {
+                    try! RealmManager.sharedInstance.realmPublic!.write {
+                        let userLocation = UserLocations()
+                        userLocation.userID = userID
+                        userLocation.longitude = newLocation.coordinate.longitude
+                        userLocation.latitude = newLocation.coordinate.latitude
+                        RealmManager.sharedInstance.realmPublic!.add(userLocation)
+                    }
+                }
+                
                 run.locations.append(locationRM)
                 self.savedLocations.append(newLocation)
             }
@@ -260,9 +357,9 @@ extension MapViewController: CLLocationManagerDelegate {
         
         
         
-        let center = CLLocationCoordinate2D(latitude: newLocation.coordinate.latitude, longitude: newLocation.coordinate.longitude)
-        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-        mapView.setRegion(region, animated: true)
+//        let center = CLLocationCoordinate2D(latitude: newLocation.coordinate.latitude, longitude: newLocation.coordinate.longitude)
+//        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+//        mapView.setRegion(region, animated: true)
         
     }
     
@@ -331,6 +428,9 @@ extension MapViewController: MKMapViewDelegate {
         }
     }
 }
+
+
+
 
 
 

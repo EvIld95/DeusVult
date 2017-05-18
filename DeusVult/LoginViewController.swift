@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import IHKeyboardAvoiding
 import MBProgressHUD
+import RealmSwift
 
 class LoginViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
@@ -23,8 +24,9 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //RealmManager.sharedInstance.logoutAllUsers()
         self.setupTouchGesture()
-        self.playBackgroundMusic()
+        //self.playBackgroundMusic()
         
         KeyboardAvoiding.avoidingView = self.view
         let emailRx = emailTextField.rx.text.throttle(0.5,scheduler:MainScheduler.instance).map { (inputText) -> Bool in
@@ -34,7 +36,7 @@ class LoginViewController: UIViewController {
             return (inputText?.characters.count ?? 0) > 0
         }
         
-        emailTextField.text = "pablo.szudrowicz@gmail.com"
+        emailTextField.text = "jan@gmail.com"
         passwordTextField.text = "deus"
         Observable.combineLatest(emailRx, passwordRx).subscribe(onNext: { (email, password) in
             if(email == true && password == true) {
@@ -56,6 +58,11 @@ class LoginViewController: UIViewController {
         MBProgressHUD.showAdded(to: self.view, animated: true)
         RealmManager.sharedInstance.connectToRealmDatabase(username: emailTextField.text!, password: passwordTextField.text!, register: false, viewControllerHandler: self) {
             MBProgressHUD.hide(for: self.view, animated: true)
+            
+           
+            
+            
+            
             let mapViewController = self.storyboard!.instantiateViewController(withIdentifier: "navigationController")
             self.show(mapViewController, sender: nil)
         }
@@ -73,6 +80,8 @@ class LoginViewController: UIViewController {
     func playBackgroundMusic() {
         self.soundPlayerManager.play(mp3Name: "Explosion", infiniteLoop: true)
     }
+    
+    
     
 }
 

@@ -27,6 +27,9 @@
 		F7B6FC8E1EC8E95200F59703 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC8D1EC8E95200F59703 /* Double+Extension.swift */; };
 		F7B6FC901EC9ECC500F59703 /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC8F1EC9ECC500F59703 /* NewAccountViewController.swift */; };
 		F7B6FC921EC9FE3900F59703 /* PersonalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC911EC9FE3900F59703 /* PersonalInfo.swift */; };
+		F7B6FC941ECA21DA00F59703 /* UserLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC931ECA21DA00F59703 /* UserLocations.swift */; };
+		F7B6FC961ECA2E0D00F59703 /* Results + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC951ECA2E0D00F59703 /* Results + Extension.swift */; };
+		F7B6FC981ECB4B9000F59703 /* DeusVultPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC971ECB4B9000F59703 /* DeusVultPointAnnotation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +57,9 @@
 		F7B6FC8D1EC8E95200F59703 /* Double+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		F7B6FC8F1EC9ECC500F59703 /* NewAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAccountViewController.swift; sourceTree = "<group>"; };
 		F7B6FC911EC9FE3900F59703 /* PersonalInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalInfo.swift; sourceTree = "<group>"; };
+		F7B6FC931ECA21DA00F59703 /* UserLocations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLocations.swift; sourceTree = "<group>"; };
+		F7B6FC951ECA2E0D00F59703 /* Results + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Results + Extension.swift"; sourceTree = "<group>"; };
+		F7B6FC971ECB4B9000F59703 /* DeusVultPointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeusVultPointAnnotation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +143,7 @@
 			children = (
 				F7452B421EC8849700218A7C /* UIColor+Extenstion.swift */,
 				F7B6FC8D1EC8E95200F59703 /* Double+Extension.swift */,
+				F7B6FC951ECA2E0D00F59703 /* Results + Extension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -167,6 +174,7 @@
 				F7452B501EC8A78700218A7C /* Run.swift */,
 				F7452B521EC8A7A400218A7C /* LocationRM.swift */,
 				F7B6FC911EC9FE3900F59703 /* PersonalInfo.swift */,
+				F7B6FC931ECA21DA00F59703 /* UserLocations.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -175,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				F7B6FC8B1EC8E8C000F59703 /* Helpers.swift */,
+				F7B6FC971ECB4B9000F59703 /* DeusVultPointAnnotation.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -316,6 +325,7 @@
 				F7452B511EC8A78700218A7C /* Run.swift in Sources */,
 				F7452B411EC8824A00218A7C /* DeusVultButton.swift in Sources */,
 				F7452B471EC88C9300218A7C /* RealmManager.swift in Sources */,
+				F7B6FC981ECB4B9000F59703 /* DeusVultPointAnnotation.swift in Sources */,
 				F7B6FC901EC9ECC500F59703 /* NewAccountViewController.swift in Sources */,
 				F7B6FC8C1EC8E8C000F59703 /* Helpers.swift in Sources */,
 				F7452B551EC8D89200218A7C /* GameTypeViewController.swift in Sources */,
@@ -324,7 +334,9 @@
 				F7452B491EC88E0100218A7C /* SoundPlayerManager.swift in Sources */,
 				F7B6FC8E1EC8E95200F59703 /* Double+Extension.swift in Sources */,
 				F7452B531EC8A7A400218A7C /* LocationRM.swift in Sources */,
+				F7B6FC941ECA21DA00F59703 /* UserLocations.swift in Sources */,
 				F7452B431EC8849700218A7C /* UIColor+Extenstion.swift in Sources */,
+				F7B6FC961ECA2E0D00F59703 /* Results + Extension.swift in Sources */,
 				F7452B4F1EC8A72200218A7C /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

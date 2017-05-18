@@ -27,6 +27,7 @@ func calculateBurnedCalories(avgSpeed: Double, seconds: Int, weight: Double) -> 
         case to11kmPerHour = 11
         case to12kmPerHour = 12
         case to13kmPerHour = 13
+        case to14kmPerHour = 14
         case to15kmPerHour = 15
         case more15kmPerHour = 16
         
@@ -58,6 +59,8 @@ func calculateBurnedCalories(avgSpeed: Double, seconds: Int, weight: Double) -> 
                 return 12.5
             case .to13kmPerHour:
                 return 13.5
+            case .to14kmPerHour:
+                return 14
             case .to15kmPerHour:
                 return 15
             case .more15kmPerHour:
@@ -74,6 +77,6 @@ func calculateBurnedCalories(avgSpeed: Double, seconds: Int, weight: Double) -> 
     }
     let ratio = metRatioActivity.getMetRatio()
     let minutes = seconds / 60
-    let calories = ratio * Double(minutes) * weight * 3.5 / 200
+    let calories = ratio * Double(minutes) * weight * 3.5 / 200.0
     return calories
 }
