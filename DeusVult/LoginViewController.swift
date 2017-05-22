@@ -24,7 +24,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //RealmManager.sharedInstance.logoutAllUsers()
+        RealmManager.sharedInstance.logoutAllUsers()
         self.setupTouchGesture()
         //self.playBackgroundMusic()
         
@@ -58,11 +58,7 @@ class LoginViewController: UIViewController {
         MBProgressHUD.showAdded(to: self.view, animated: true)
         RealmManager.sharedInstance.connectToRealmDatabase(username: emailTextField.text!, password: passwordTextField.text!, register: false, viewControllerHandler: self) {
             MBProgressHUD.hide(for: self.view, animated: true)
-            
-           
-            
-            
-            
+
             let mapViewController = self.storyboard!.instantiateViewController(withIdentifier: "navigationController")
             self.show(mapViewController, sender: nil)
         }

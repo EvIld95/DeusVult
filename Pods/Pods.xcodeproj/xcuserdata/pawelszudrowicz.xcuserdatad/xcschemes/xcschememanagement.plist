@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Charts.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>IHKeyboardAvoiding.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,12 +52,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>20EAC6DA09CECA22B6AAE08A0C22D41A</key>
+		<key>0375519F808421B20DE43104059F1AD0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3F825AA773E59DB65ACB818B4CE671FE</key>
+		<key>23D60B3673253E63A54224F410C4EA3F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -62,17 +67,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>86428BDA4DC13E16A35B678CD4BE8BF0</key>
+		<key>4E129AA325527AAD27B85943D2A5DDFA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8CE55FE1E6F29A02CDCE4CD2FF37BC31</key>
+		<key>7EF49A6A177D007442ECB5ABAC6341CA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A453479CD16F96FB3FA37B0F43A8BB5D</key>
+		<key>AEFF5C023D6683E0943EF08F31B4F850</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F307B842FF76B2DE6C55DB67C0885325</key>
 		<dict>
 			<key>primary</key>
 			<true/>

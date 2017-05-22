@@ -23,8 +23,5 @@ class GameTypeViewController: UIViewController {
         self.present(mapViewController, animated: true, completion: nil)
     }
 
-    @IBAction func historyButtonTapped(sender:UIButton!) {
-        let mapViewController = self.storyboard!.instantiateViewController(withIdentifier: "mapViewController")
-        self.present(mapViewController, animated: true, completion: nil)
-    }
+   
 }

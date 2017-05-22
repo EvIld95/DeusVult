@@ -34,20 +34,12 @@ class RealmManager {
             
             DispatchQueue.main.async {
                 let configuration = Realm.Configuration(
-                    syncConfiguration: SyncConfiguration(user: user, realmURL: URL(string: "realm://40.68.240.132/~/deusvult")!)
+                    syncConfiguration: SyncConfiguration(user: user, realmURL: URL(string: "realm://40.68.240.132:9080/~/deusvult")!)
                 )
-                
-        
-               
-                
-                //var conf = Realm.Configuration.defaultConfiguration
-                //conf.syncConfiguration = SyncConfiguration(user: user, realmURL: URL(string: "realm://127.0.0.1/globalFinalDatabase")!)
-                
-                //self.realmPublic = try! Realm(configuration: conf)
-                //self.realm = try! Realm(configuration: configuration)
                 
                 self.realm = try! Realm(configuration: configuration)
                 
+                //completion()
                 self.connectToRealmPublicDatabase(viewControllerHandler: viewControllerHandler, mainUser: user, completion: completion)
             }
         }

@@ -45,7 +45,8 @@ class MapViewController: UIViewController {
     var userAnnotationDict = Dictionary<String, MKAnnotation>()
     let disposeBag = DisposeBag()
     var realmUserLocation: Results<UserLocations>!
-    //var currentUser : String!
+    var followUserLocation = true
+    var userWeight: Float?
     var seconds = 0 {
         didSet {
             let (hours, minutes, sec) = secondsToHoursMinutesSeconds(seconds: self.seconds)
@@ -97,23 +98,14 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         
         self.realmUserLocation = RealmManager.sharedInstance.realmPublic!.objects(UserLocations.self)
+        self.userWeight = RealmManager.sharedInstance.realm!.objects(PersonalInfo.self).first?.weight
         self.initSetup()
         self.setupRx()
         self.setupViews()
         self.setupLocationManager()
+        
         mapView.delegate = self
-        
-      
-        //print(SyncUser.all)
-        //print("Current user \(RealmManager.sharedInstance.currentLoggedUser!.identity!)")
-        
-        //print(RealmManager.sharedInstance.realmPublic!.objects(UserLocations.self))
-        
-//        let annotation = DeusVultPointAnnotation()
-//        annotation.coordinate = CLLocationCoordinate2D(latitude: 50.0, longitude: 10.0)
-//        annotation.title = "Location"
-//       
-//        mapView.addAnnotation(annotation)
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -189,7 +181,7 @@ class MapViewController: UIViewController {
     func eachSecond(timer: Timer) {
         self.seconds+=1
         self.pace = (self.distance / Double(self.seconds)) * 3.6
-        self.calories = calculateBurnedCalories(avgSpeed: self.pace, seconds: self.seconds, weight: 72.0)
+        self.calories = calculateBurnedCalories(avgSpeed: self.pace, seconds: self.seconds, weight: Double(self.userWeight ?? 72.0))
     }
     
     func updatesAllUsersPosition() {
@@ -274,6 +266,8 @@ class MapViewController: UIViewController {
                 RealmManager.sharedInstance.realm!.add(run)
             }
         }
+        
+        dismiss(animated: true, completion: nil)
     }
     
 }
@@ -298,6 +292,13 @@ extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let gpsAccuracy = checkForGoodGPSSignal == true ? gpsSignalAccuracy : 1000.0
         let newLocation = locations.last!
+        
+        if followUserLocation == true {
+            let center = CLLocationCoordinate2D(latitude: newLocation.coordinate.latitude, longitude: newLocation.coordinate.longitude)
+            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+            mapView.setRegion(region, animated: true)
+        }
+        
         print("\(newLocation.horizontalAccuracy) | \(locationManager.desiredAccuracy)")
         
         if newLocation.timestamp.timeIntervalSinceNow < -5 {
@@ -356,11 +357,6 @@ extension MapViewController: CLLocationManagerDelegate {
         }
         
         
-        
-//        let center = CLLocationCoordinate2D(latitude: newLocation.coordinate.latitude, longitude: newLocation.coordinate.longitude)
-//        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-//        mapView.setRegion(region, animated: true)
-        
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -390,11 +386,7 @@ extension MapViewController: MKMapViewDelegate {
             maxLng = max(maxLng, location.coordinate.longitude)
         }
         
-        return MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: (minLat + maxLat)/2,
-                                           longitude: (minLng + maxLng)/2),
-            span: MKCoordinateSpan(latitudeDelta: (maxLat - minLat)*1.1,
-                                   longitudeDelta: (maxLng - minLng)*1.1))
+        return MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: (minLat + maxLat)/2, longitude: (minLng + maxLng)/2),span: MKCoordinateSpan(latitudeDelta: (maxLat - minLat)*1.1, longitudeDelta: (maxLng - minLng)*1.1))
     }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
