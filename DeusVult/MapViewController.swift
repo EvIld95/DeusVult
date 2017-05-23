@@ -190,7 +190,6 @@ class MapViewController: UIViewController {
             } else {
                 timeForAnnotation[key] = value - 1
             }
-            
         }
     }
     
@@ -208,11 +207,12 @@ class MapViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(randTime)) {
           
             let annotation = ItemPointAnnotation()
-            let randPlus = Double(arc4random_uniform(UInt32(50))) + 1.0
-            let randMinus = Double(arc4random_uniform(UInt32(50)))
+            let maxDistance = 20
+            let randPlus = Double(arc4random_uniform(UInt32(maxDistance))) + 1.0
+            let randMinus = Double(arc4random_uniform(UInt32(maxDistance)))
             
-            let randPlus2 = Double(arc4random_uniform(UInt32(50))) + 1.0
-            let randMinus2 = Double(arc4random_uniform(UInt32(50)))
+            let randPlus2 = Double(arc4random_uniform(UInt32(maxDistance))) + 1.0
+            let randMinus2 = Double(arc4random_uniform(UInt32(maxDistance)))
         
             let coordinateLatitude = self.mapView.userLocation.coordinate.latitude * ((Double(100000.0 + randPlus - randMinus) / 100000.0))
             let coordinateLongitude = self.mapView.userLocation.coordinate.longitude * ((Double(100000.0 + randPlus2 - randMinus2) / 100000.0))
@@ -227,7 +227,7 @@ class MapViewController: UIViewController {
             annotation.points = 100
             annotation.money = 100
         
-            let assumeSpeed = 5.0
+            let assumeSpeed = 1.0//5.0
             print("Distance \(distance)")
             let time = Double(distance) / (assumeSpeed / 3.6)
         
@@ -528,7 +528,16 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        //print("Updated user location")
+        print("Did update user location")
+        
+        for key in timeForAnnotation.keys {
+            if(userLocation.location!.distance(from: CLLocation(latitude: key.coordinate.latitude, longitude: key.coordinate.longitude)) < 20) {
+                print("YEAH POINTS")
+                mapView.removeAnnotation(key)
+                timeForAnnotation.removeValue(forKey: key)
+            }
+        }
+        
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -539,6 +548,7 @@ extension MapViewController: MKMapViewDelegate {
             label.text = self.getTimeCorrectFormat(hours: h, minutes: m, sec: s)
         }
     }
+    
 }
 
 
