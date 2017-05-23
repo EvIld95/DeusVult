@@ -13,6 +13,7 @@ import MapKit
 class LocationRM: Object {
     dynamic var longitude = 0.0
     dynamic var latitude = 0.0
+    dynamic var altitude = 0.0
     dynamic var speed = 0.0
 
     var location : CLLocation {

@@ -346,17 +346,23 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Ti-ME-Aje" customClass="LineChartView" customModule="Charts">
                                 <rect key="frame" x="0.0" y="333.5" width="375" height="333.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H3m-o8-2s9">
-                                        <rect key="frame" x="166" y="8" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="8QR-fb-o4T">
+                                        <rect key="frame" x="40" y="8" width="295" height="29"/>
+                                        <segments>
+                                            <segment title="Pace"/>
+                                            <segment title="High above sea"/>
+                                        </segments>
+                                        <color key="tintColor" red="0.87369515920550089" green="0.4205751043408566" blue="0.38812784750924012" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <connections>
+                                            <action selector="indexChangedWithSender:" destination="gw8-Cn-E2d" eventType="valueChanged" id="Dma-IN-Oq1"/>
+                                        </connections>
+                                    </segmentedControl>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="0.943381027606643" blue="0.850468146629758" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.99680441617965698" green="0.99195486307144165" blue="0.99626749753952026" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="H3m-o8-2s9" firstAttribute="centerX" secondItem="8Ti-ME-Aje" secondAttribute="centerX" id="DNF-oq-qNa"/>
-                                    <constraint firstItem="H3m-o8-2s9" firstAttribute="top" secondItem="8Ti-ME-Aje" secondAttribute="top" constant="8" id="SCF-m3-FF9"/>
+                                    <constraint firstAttribute="trailing" secondItem="8QR-fb-o4T" secondAttribute="trailing" constant="40" id="hKB-9b-hYE"/>
+                                    <constraint firstItem="8QR-fb-o4T" firstAttribute="leading" secondItem="8Ti-ME-Aje" secondAttribute="leading" constant="40" id="jQb-gx-v0L"/>
+                                    <constraint firstItem="8QR-fb-o4T" firstAttribute="top" secondItem="8Ti-ME-Aje" secondAttribute="top" constant="8" id="mX6-ku-v5a"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -373,14 +379,60 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="chartTitleLabel" destination="H3m-o8-2s9" id="RLw-oR-xnr"/>
                         <outlet property="lineChartView" destination="8Ti-ME-Aje" id="yQt-ly-zxF"/>
                         <outlet property="mapView" destination="CEf-o9-pMY" id="6gJ-Gi-WiK"/>
+                        <outlet property="segmentedControl" destination="8QR-fb-o4T" id="suJ-PN-ks7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3wQ-oO-oM6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3901.5999999999999" y="886.50674662668678"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="73D-OD-Br1">
+            <objects>
+                <viewController id="sey-aI-IrY" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="x2l-f5-Glj"/>
+                        <viewControllerLayoutGuide type="bottom" id="IQy-HP-0uL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="K1i-Qr-uoF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="r22-eP-jEK">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="512"/>
+                                <subviews>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="sNm-UV-qgX">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="256"/>
+                                    </mapView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="vMA-QV-fRl">
+                                        <rect key="frame" x="0.0" y="256" width="375" height="256"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PXl-9H-cyN">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
+                                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jnj-Ra-fv8">
+                                                <rect key="frame" x="0.0" y="128" width="375" height="128"/>
+                                                <color key="backgroundColor" red="1" green="0.9885548314" blue="0.32729200009999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="r22-eP-jEK" firstAttribute="leading" secondItem="K1i-Qr-uoF" secondAttribute="leading" id="7wL-Pu-bcl"/>
+                            <constraint firstAttribute="trailing" secondItem="r22-eP-jEK" secondAttribute="trailing" id="Ged-Pi-vvC"/>
+                            <constraint firstItem="r22-eP-jEK" firstAttribute="top" secondItem="K1i-Qr-uoF" secondAttribute="top" id="N2E-Rh-j6R"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8e8-qV-ESG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4711" y="890"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="mEj-c9-ZQK">

@@ -385,6 +385,7 @@ extension MapViewController: CLLocationManagerDelegate {
                 let locationRM = LocationRM()
                 locationRM.latitude = newLocation.coordinate.latitude
                 locationRM.longitude = newLocation.coordinate.longitude
+                locationRM.altitude = newLocation.altitude
                 locationRM.speed = newLocation.speed
                 
                 

@@ -15,12 +15,28 @@ class ShowRunViewController: UIViewController {
     
     @IBOutlet weak var lineChartView: LineChartView!
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var chartTitleLabel: UILabel!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     var run: Run!
+    var runEntries = [ChartDataEntry]()
     
     override func viewDidLoad() {
         super.viewDidLoad();
+        
+        self.preapreChartView()
+        self.displayPaceData()
+        
+        self.mapView.delegate = self
+        loadMap()
+        
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    func preapreChartView() {
         lineChartView.xAxis.drawGridLinesEnabled = false
         lineChartView.xAxis.drawAxisLineEnabled = false
         lineChartView.xAxis.labelPosition = .bottom
@@ -37,13 +53,12 @@ class ShowRunViewController: UIViewController {
         lineChartView.xAxis.drawLimitLinesBehindDataEnabled = false
         lineChartView.drawMarkers = false
         
-        lineChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0, easingOption: .easeInCubic)
-        
+       
+    }
     
-        var runEntries = [ChartDataEntry]()
-        
-        
-        
+    func displayPaceData() {
+        lineChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0, easingOption: .easeInCubic)
+        runEntries.removeAll(keepingCapacity: true)
         for (i,location) in run.locations.enumerated() {
             let entry = ChartDataEntry(x: Double(i), y: location.speed)
             runEntries.append(entry)
@@ -55,26 +70,42 @@ class ShowRunViewController: UIViewController {
         chartDataSet.drawCirclesEnabled = true
         chartDataSet.lineWidth = 2.0
         chartDataSet.circleRadius = 2.0
-        chartDataSet.circleColors = [UIColor.red]
+        chartDataSet.circleColors = [UIColor(red: 53.0/255.0, green: 92.0/255.0, blue: 125.0/255.0, alpha: 1.0)]
         chartDataSet.drawFilledEnabled = true
-        chartDataSet.fillColor = UIColor.green
+        chartDataSet.fillColor = UIColor(red: 192.0/255.0, green: 108.0/255.0, blue: 132.0/255.0, alpha: 1.0)
         chartDataSet.drawValuesEnabled = false
-        chartDataSet.colors = [UIColor.red]
-    
-     
+        chartDataSet.colors = [UIColor(red: 53.0/255.0, green: 92.0/255.0, blue: 125.0/255.0, alpha: 1.0)]
+        
+        
         let chartData = LineChartData(dataSet: chartDataSet)
         lineChartView.data = chartData
         
-        self.chartTitleLabel.text = "Your run pace"
-        
-        self.mapView.delegate = self
-        loadMap()
         
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func displayAltitudeData() {
+        lineChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0, easingOption: .easeInCubic)
+        runEntries.removeAll(keepingCapacity: true)
+        for (i,location) in run.locations.enumerated() {
+            let entry = ChartDataEntry(x: Double(i), y: location.altitude)
+            runEntries.append(entry)
+        }
+        
+        let chartDataSet = LineChartDataSet(values: runEntries, label: "Altitude")
+        chartDataSet.mode = .cubicBezier
+        chartDataSet.cubicIntensity = 0.2
+        chartDataSet.drawCirclesEnabled = true
+        chartDataSet.lineWidth = 2.0
+        chartDataSet.circleRadius = 2.0
+        chartDataSet.circleColors = [UIColor.green]
+        chartDataSet.drawFilledEnabled = true
+        chartDataSet.fillColor = UIColor.blue
+        chartDataSet.drawValuesEnabled = false
+        chartDataSet.colors = [UIColor.green]
+        
+        
+        let chartData = LineChartData(dataSet: chartDataSet)
+        lineChartView.data = chartData
     }
 
 }
@@ -133,6 +164,17 @@ extension ShowRunViewController : MKMapViewDelegate {
         }
     }
 
+    
+    @IBAction func indexChanged(sender: UISegmentedControl) {
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            self.displayPaceData()
+        case 1:
+            self.displayAltitudeData()
+        default:
+            self.displayPaceData()
+        }
+    }
 }
 
 
