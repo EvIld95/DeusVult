@@ -14,5 +14,6 @@ import MapKit
 
 class ItemPointAnnotation: MKPointAnnotation {
     var image: String!
-    
+    var points: Int!
+    var money: Int!
 }

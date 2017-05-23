@@ -48,15 +48,12 @@ class MapViewController: UIViewController {
     var realmUserLocation: Results<UserLocations>!
     var followUserLocation = false
     var userWeight: Float?
-    
+    var timeForAnnotation = Dictionary<ItemPointAnnotation, Int>()
 
     var seconds = 0 {
         didSet {
             let (hours, minutes, sec) = secondsToHoursMinutesSeconds(seconds: self.seconds)
-            var displayTimeText = (hours > 0) ? "\(hours) h " : ""
-            displayTimeText += (minutes > 0) ? "\(minutes) min " : ""
-            displayTimeText += "\(sec) sec"
-            self.timeLabel.text = displayTimeText
+            self.timeLabel.text = self.getTimeCorrectFormat(hours: hours, minutes: minutes, sec: sec)
         }
     }
     
@@ -185,12 +182,22 @@ class MapViewController: UIViewController {
         self.seconds+=1
         self.pace = (self.distance / Double(self.seconds)) * 3.6
         self.calories = calculateBurnedCalories(avgSpeed: self.pace, seconds: self.seconds, weight: Double(self.userWeight ?? 72.0))
+        
+        for (key, value) in timeForAnnotation {
+            if value < 0 {
+                mapView.removeAnnotation(key)
+                timeForAnnotation.removeValue(forKey: key)
+            } else {
+                timeForAnnotation[key] = value - 1
+            }
+            
+        }
     }
     
     func updatesAllUsersPosition() {
-        print("updateAllUserPosition")
+        //print("updateAllUserPosition")
         //print(RealmManager.sharedInstance.realmPublic!.objects(UserLocations.self))
-        print(realmUserLocation);
+        //print(realmUserLocation);
         getUsersLocation()
         addUsersPositionToMapView()
     }
@@ -200,22 +207,32 @@ class MapViewController: UIViewController {
         print("RandTime: \(randTime)")
         DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(randTime)) {
           
-                let annotation = MuslimPointAnnotation()
-                let randPlus = Double(arc4random_uniform(UInt32(50))) + 1.0
-                let randMinus = Double(arc4random_uniform(UInt32(50)))
-                
-                let randPlus2 = Double(arc4random_uniform(UInt32(50))) + 1.0
-                let randMinus2 = Double(arc4random_uniform(UInt32(50)))
-                print(self.mapView.userLocation.coordinate)
-                let coordinateLatitude = self.mapView.userLocation.coordinate.latitude * ((Double(100000.0 + randPlus - randMinus) / 100000.0))
-                let coordinateLongitude = self.mapView.userLocation.coordinate.longitude * ((Double(100000.0 + randPlus2 - randMinus2) / 100000.0))
-                annotation.coordinate = CLLocation(latitude: coordinateLatitude, longitude: coordinateLongitude).coordinate
-                print(annotation.coordinate)
-                annotation.title = "Location"
-                annotation.image = "Mehmed"
-                
-                
-                self.mapView.addAnnotation(annotation)
+            let annotation = ItemPointAnnotation()
+            let randPlus = Double(arc4random_uniform(UInt32(50))) + 1.0
+            let randMinus = Double(arc4random_uniform(UInt32(50)))
+            
+            let randPlus2 = Double(arc4random_uniform(UInt32(50))) + 1.0
+            let randMinus2 = Double(arc4random_uniform(UInt32(50)))
+        
+            let coordinateLatitude = self.mapView.userLocation.coordinate.latitude * ((Double(100000.0 + randPlus - randMinus) / 100000.0))
+            let coordinateLongitude = self.mapView.userLocation.coordinate.longitude * ((Double(100000.0 + randPlus2 - randMinus2) / 100000.0))
+            let location = CLLocation(latitude: coordinateLatitude, longitude: coordinateLongitude)
+            annotation.coordinate = location.coordinate
+        
+            let distance = self.mapView.userLocation.location!.distance(from: location)
+        
+            annotation.title = "Item"
+            
+            annotation.image = (arc4random_uniform(UInt32(2)) % 2 == 0) ? "sword" : "treasure"
+            annotation.points = 100
+            annotation.money = 100
+        
+            let assumeSpeed = 5.0
+            print("Distance \(distance)")
+            let time = Double(distance) / (assumeSpeed / 3.6)
+        
+            self.timeForAnnotation[annotation] = Int(time)
+            self.mapView.addAnnotation(annotation)
             
         }
         
@@ -238,7 +255,7 @@ class MapViewController: UIViewController {
             } else {
                 let annotation = DeusVultPointAnnotation()
                 annotation.coordinate = position.value.coordinate
-                annotation.title = "Location"
+                annotation.title = "Location of User"
                 annotation.id = position.key
                 mapView.addAnnotation(annotation)
             }
@@ -303,6 +320,13 @@ class MapViewController: UIViewController {
         }
         
         dismiss(animated: true, completion: nil)
+    }
+    
+    func getTimeCorrectFormat(hours: Int, minutes: Int, sec: Int) -> String {
+        var displayTimeText = (hours > 0) ? "\(hours) h " : ""
+        displayTimeText += (minutes > 0) ? "\(minutes) min " : ""
+        displayTimeText += "\(sec) sec"
+        return displayTimeText
     }
     
 }
@@ -458,40 +482,45 @@ extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        if(annotation.isEqual(mapView.userLocation)) {
+        guard annotation is ItemPointAnnotation else {
             return nil
         }
         var reuseIdentifier = ""
-        if annotation is MuslimPointAnnotation {
+        //if annotation is ItemPointAnnotation {
             print("Muslim")
-            reuseIdentifier = "pinMuslim"
-        }
-        else {
-            reuseIdentifier = "pinStandard"
-        }
+        reuseIdentifier = "pinItem"
+        //}
+        //else {
+        //    reuseIdentifier = "pinStandard"
+        //}
         
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
         
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
-            annotationView?.canShowCallout = true
+            annotationView!.canShowCallout = true
+            annotationView!.isEnabled = true
+            
+            let label = UILabel(frame: CGRect(x: 0, y: 0, width: 120, height: 40))
+            label.text = "Time"
+            
+            annotationView!.rightCalloutAccessoryView = label
+            
         } else {
             annotationView?.annotation = annotation
         }
         
-        if annotation is MuslimPointAnnotation {
-            let muslimPointAnnotation = annotation as! MuslimPointAnnotation
+        if annotation is ItemPointAnnotation {
+            let itemPointAnnotation = annotation as! ItemPointAnnotation
             
             
-            let image = UIImage(named: muslimPointAnnotation.image)
+            let image = UIImage(named: itemPointAnnotation.image)
             let size = CGSize(width: 40, height: 40)
             UIGraphicsBeginImageContext(size)
             image!.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
             let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             annotationView!.image = resizedImage
-            
-            
             
         }
         
@@ -500,6 +529,15 @@ extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         //print("Updated user location")
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if view.annotation is ItemPointAnnotation {
+            let time = timeForAnnotation[view.annotation! as! ItemPointAnnotation]
+            let label = view.rightCalloutAccessoryView! as! UILabel
+            let (h,m,s) = secondsToHoursMinutesSeconds(seconds: time!)
+            label.text = self.getTimeCorrectFormat(hours: h, minutes: m, sec: s)
+        }
     }
 }
 
