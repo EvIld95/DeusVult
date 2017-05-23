@@ -33,6 +33,7 @@ class MapViewController: UIViewController {
     var savedLocations = [CLLocation]()
     var timer = Timer()
     var timerUpdatesAllUserPosition = Timer()
+    var timerGenerateItems = Timer()
     var locationManager = CLLocationManager()
     var run : Run!
     var finish = Variable<Bool>(false)
@@ -45,8 +46,10 @@ class MapViewController: UIViewController {
     var userAnnotationDict = Dictionary<String, MKAnnotation>()
     let disposeBag = DisposeBag()
     var realmUserLocation: Results<UserLocations>!
-    var followUserLocation = true
+    var followUserLocation = false
     var userWeight: Float?
+    
+
     var seconds = 0 {
         didSet {
             let (hours, minutes, sec) = secondsToHoursMinutesSeconds(seconds: self.seconds)
@@ -192,6 +195,32 @@ class MapViewController: UIViewController {
         addUsersPositionToMapView()
     }
     
+    func generateItems() {
+        let randTime = Int(arc4random_uniform(UInt32(15)))
+        print("RandTime: \(randTime)")
+        DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(randTime)) {
+          
+                let annotation = MuslimPointAnnotation()
+                let randPlus = Double(arc4random_uniform(UInt32(50))) + 1.0
+                let randMinus = Double(arc4random_uniform(UInt32(50)))
+                
+                let randPlus2 = Double(arc4random_uniform(UInt32(50))) + 1.0
+                let randMinus2 = Double(arc4random_uniform(UInt32(50)))
+                print(self.mapView.userLocation.coordinate)
+                let coordinateLatitude = self.mapView.userLocation.coordinate.latitude * ((Double(100000.0 + randPlus - randMinus) / 100000.0))
+                let coordinateLongitude = self.mapView.userLocation.coordinate.longitude * ((Double(100000.0 + randPlus2 - randMinus2) / 100000.0))
+                annotation.coordinate = CLLocation(latitude: coordinateLatitude, longitude: coordinateLongitude).coordinate
+                print(annotation.coordinate)
+                annotation.title = "Location"
+                annotation.image = "Mehmed"
+                
+                
+                self.mapView.addAnnotation(annotation)
+            
+        }
+        
+    }
+    
     func getUsersLocation() {
         let userID = RealmManager.sharedInstance.currentLoggedUser!.identity! //SyncUser.current!.identity!
         let predicate = NSPredicate(format: "userID != %@", userID)
@@ -245,6 +274,12 @@ class MapViewController: UIViewController {
                                      selector: #selector(updatesAllUsersPosition),
                                      userInfo: nil,
                                      repeats: true)
+        
+        timerGenerateItems = Timer.scheduledTimer(timeInterval: 20,
+                                                           target: self,
+                                                           selector: #selector(generateItems),
+                                                           userInfo: nil,
+                                                           repeats: true)
         
         stopButton.isHidden = false
         viewTransition()
@@ -418,6 +453,53 @@ extension MapViewController: MKMapViewDelegate {
         } else {
             print("ERROR with map")
         }
+    }
+    
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        if(annotation.isEqual(mapView.userLocation)) {
+            return nil
+        }
+        var reuseIdentifier = ""
+        if annotation is MuslimPointAnnotation {
+            print("Muslim")
+            reuseIdentifier = "pinMuslim"
+        }
+        else {
+            reuseIdentifier = "pinStandard"
+        }
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
+        
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
+            annotationView?.canShowCallout = true
+        } else {
+            annotationView?.annotation = annotation
+        }
+        
+        if annotation is MuslimPointAnnotation {
+            let muslimPointAnnotation = annotation as! MuslimPointAnnotation
+            
+            
+            let image = UIImage(named: muslimPointAnnotation.image)
+            let size = CGSize(width: 40, height: 40)
+            UIGraphicsBeginImageContext(size)
+            image!.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+            let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            annotationView!.image = resizedImage
+            
+            
+            
+        }
+        
+        return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        //print("Updated user location")
     }
 }
 

@@ -27,6 +27,8 @@
 		F75C02F71ECEF7D3001F454A /* ShowRunViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75C02F61ECEF7D3001F454A /* ShowRunViewController.swift */; };
 		F75C02F91ED0DC8A001F454A /* MulticolorPolylineSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75C02F81ED0DC8A001F454A /* MulticolorPolylineSegment.swift */; };
 		F78AB2A41ED38B31007536C6 /* MuslimPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB2A31ED38B31007536C6 /* MuslimPosition.swift */; };
+		F78AB2A71ED38DFE007536C6 /* MuslimPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB2A61ED38DFE007536C6 /* MuslimPointAnnotation.swift */; };
+		F78AB2A91ED440D6007536C6 /* ItemPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB2A81ED440D6007536C6 /* ItemPointAnnotation.swift */; };
 		F7B6FC8C1EC8E8C000F59703 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC8B1EC8E8C000F59703 /* Helpers.swift */; };
 		F7B6FC8E1EC8E95200F59703 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC8D1EC8E95200F59703 /* Double+Extension.swift */; };
 		F7B6FC901EC9ECC500F59703 /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC8F1EC9ECC500F59703 /* NewAccountViewController.swift */; };
@@ -61,6 +63,8 @@
 		F75C02F61ECEF7D3001F454A /* ShowRunViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowRunViewController.swift; sourceTree = "<group>"; };
 		F75C02F81ED0DC8A001F454A /* MulticolorPolylineSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MulticolorPolylineSegment.swift; sourceTree = "<group>"; };
 		F78AB2A31ED38B31007536C6 /* MuslimPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MuslimPosition.swift; sourceTree = "<group>"; };
+		F78AB2A61ED38DFE007536C6 /* MuslimPointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MuslimPointAnnotation.swift; sourceTree = "<group>"; };
+		F78AB2A81ED440D6007536C6 /* ItemPointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemPointAnnotation.swift; sourceTree = "<group>"; };
 		F7B6FC8B1EC8E8C000F59703 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		F7B6FC8D1EC8E95200F59703 /* Double+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		F7B6FC8F1EC9ECC500F59703 /* NewAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAccountViewController.swift; sourceTree = "<group>"; };
@@ -190,11 +194,21 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		F78AB2A51ED38DD8007536C6 /* PointAnnotations */ = {
+			isa = PBXGroup;
+			children = (
+				F7B6FC971ECB4B9000F59703 /* DeusVultPointAnnotation.swift */,
+				F78AB2A61ED38DFE007536C6 /* MuslimPointAnnotation.swift */,
+				F78AB2A81ED440D6007536C6 /* ItemPointAnnotation.swift */,
+			);
+			name = PointAnnotations;
+			sourceTree = "<group>";
+		};
 		F7B6FC8A1EC8E8A800F59703 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				F78AB2A51ED38DD8007536C6 /* PointAnnotations */,
 				F7B6FC8B1EC8E8C000F59703 /* Helpers.swift */,
-				F7B6FC971ECB4B9000F59703 /* DeusVultPointAnnotation.swift */,
 				F75C02F81ED0DC8A001F454A /* MulticolorPolylineSegment.swift */,
 			);
 			name = Helpers;
@@ -341,6 +355,7 @@
 				F75C02F71ECEF7D3001F454A /* ShowRunViewController.swift in Sources */,
 				F7B6FC981ECB4B9000F59703 /* DeusVultPointAnnotation.swift in Sources */,
 				F7B6FC901EC9ECC500F59703 /* NewAccountViewController.swift in Sources */,
+				F78AB2A91ED440D6007536C6 /* ItemPointAnnotation.swift in Sources */,
 				F7B6FC8C1EC8E8C000F59703 /* Helpers.swift in Sources */,
 				F7452B551EC8D89200218A7C /* GameTypeViewController.swift in Sources */,
 				F7B6FC921EC9FE3900F59703 /* PersonalInfo.swift in Sources */,
@@ -349,6 +364,7 @@
 				F7452B491EC88E0100218A7C /* SoundPlayerManager.swift in Sources */,
 				F7B6FC8E1EC8E95200F59703 /* Double+Extension.swift in Sources */,
 				F7452B531EC8A7A400218A7C /* LocationRM.swift in Sources */,
+				F78AB2A71ED38DFE007536C6 /* MuslimPointAnnotation.swift in Sources */,
 				F7B6FC941ECA21DA00F59703 /* UserLocations.swift in Sources */,
 				F7452B431EC8849700218A7C /* UIColor+Extenstion.swift in Sources */,
 				F75C02F51ECE3C23001F454A /* HistoryViewController.swift in Sources */,
