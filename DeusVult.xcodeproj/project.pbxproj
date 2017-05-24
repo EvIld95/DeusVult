@@ -36,6 +36,9 @@
 		F7B6FC941ECA21DA00F59703 /* UserLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC931ECA21DA00F59703 /* UserLocations.swift */; };
 		F7B6FC961ECA2E0D00F59703 /* Results + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC951ECA2E0D00F59703 /* Results + Extension.swift */; };
 		F7B6FC981ECB4B9000F59703 /* DeusVultPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC971ECB4B9000F59703 /* DeusVultPointAnnotation.swift */; };
+		F7E8768D1ED5B9000074CE86 /* UserItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E8768C1ED5B9000074CE86 /* UserItems.swift */; };
+		F7E8768F1ED5BC540074CE86 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E8768E1ED5BC540074CE86 /* Users.swift */; };
+		F7E876911ED5BCB50074CE86 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E876901ED5BCB50074CE86 /* Level.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +75,9 @@
 		F7B6FC931ECA21DA00F59703 /* UserLocations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLocations.swift; sourceTree = "<group>"; };
 		F7B6FC951ECA2E0D00F59703 /* Results + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Results + Extension.swift"; sourceTree = "<group>"; };
 		F7B6FC971ECB4B9000F59703 /* DeusVultPointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeusVultPointAnnotation.swift; sourceTree = "<group>"; };
+		F7E8768C1ED5B9000074CE86 /* UserItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserItems.swift; sourceTree = "<group>"; };
+		F7E8768E1ED5BC540074CE86 /* Users.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
+		F7E876901ED5BCB50074CE86 /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +196,8 @@
 				F7B6FC911EC9FE3900F59703 /* PersonalInfo.swift */,
 				F7B6FC931ECA21DA00F59703 /* UserLocations.swift */,
 				F78AB2A31ED38B31007536C6 /* MuslimPosition.swift */,
+				F7E8768C1ED5B9000074CE86 /* UserItems.swift */,
+				F7E8768E1ED5BC540074CE86 /* Users.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -210,6 +218,7 @@
 				F78AB2A51ED38DD8007536C6 /* PointAnnotations */,
 				F7B6FC8B1EC8E8C000F59703 /* Helpers.swift */,
 				F75C02F81ED0DC8A001F454A /* MulticolorPolylineSegment.swift */,
+				F7E876901ED5BCB50074CE86 /* Level.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -347,6 +356,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7E876911ED5BCB50074CE86 /* Level.swift in Sources */,
 				F78AB2A41ED38B31007536C6 /* MuslimPosition.swift in Sources */,
 				F7452B301EC87C5100218A7C /* LoginViewController.swift in Sources */,
 				F7452B511EC8A78700218A7C /* Run.swift in Sources */,
@@ -355,6 +365,7 @@
 				F75C02F71ECEF7D3001F454A /* ShowRunViewController.swift in Sources */,
 				F7B6FC981ECB4B9000F59703 /* DeusVultPointAnnotation.swift in Sources */,
 				F7B6FC901EC9ECC500F59703 /* NewAccountViewController.swift in Sources */,
+				F7E8768D1ED5B9000074CE86 /* UserItems.swift in Sources */,
 				F78AB2A91ED440D6007536C6 /* ItemPointAnnotation.swift in Sources */,
 				F7B6FC8C1EC8E8C000F59703 /* Helpers.swift in Sources */,
 				F7452B551EC8D89200218A7C /* GameTypeViewController.swift in Sources */,
@@ -369,6 +380,7 @@
 				F7452B431EC8849700218A7C /* UIColor+Extenstion.swift in Sources */,
 				F75C02F51ECE3C23001F454A /* HistoryViewController.swift in Sources */,
 				F7B6FC961ECA2E0D00F59703 /* Results + Extension.swift in Sources */,
+				F7E8768F1ED5BC540074CE86 /* Users.swift in Sources */,
 				F7452B4F1EC8A72200218A7C /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

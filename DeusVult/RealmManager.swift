@@ -19,7 +19,7 @@ class RealmManager {
     //127.0.0.1
     private let serverAddress = "http://40.68.240.132:9080"
     
-    func connectToRealmDatabase(username:String, password: String, register: Bool, viewControllerHandler: UIViewController!, completion: @escaping () -> ()) {
+    func connectToRealmDatabase(username:String, password: String, register: Bool, viewControllerHandler: UIViewController!, completion: @escaping (_ user: SyncUser) -> ()) {
         SyncUser.logIn(with: .usernamePassword(username: username, password: password, register: register), server: URL(string: serverAddress)!) { user, error in
             guard let user = user else {
                 DispatchQueue.main.sync {
@@ -45,7 +45,7 @@ class RealmManager {
         }
     }
     
-    private func connectToRealmPublicDatabase(viewControllerHandler: UIViewController!, mainUser: SyncUser, completion: @escaping () -> ()) {
+    private func connectToRealmPublicDatabase(viewControllerHandler: UIViewController!, mainUser: SyncUser, completion: @escaping (_ syncMainUser: SyncUser) -> ()) {
         SyncUser.logIn(with: .usernamePassword(username: "pablo.szudrowicz@gmail.com", password: "deus", register: false), server: URL(string: serverAddress)!) { user, error in
             guard let user = user else {
                 DispatchQueue.main.sync {
@@ -93,7 +93,7 @@ class RealmManager {
                 //self.realmPublic = try! Realm(configuration: configurationPublicSpecificUser)
                 
                 
-                completion()
+                completion(mainUser)
             }
         }
     }

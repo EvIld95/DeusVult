@@ -56,7 +56,7 @@ class LoginViewController: UIViewController {
     @IBAction func loginButtonTapped(sender: UIButton!) {
         hideKeyboard()
         MBProgressHUD.showAdded(to: self.view, animated: true)
-        RealmManager.sharedInstance.connectToRealmDatabase(username: emailTextField.text!, password: passwordTextField.text!, register: false, viewControllerHandler: self) {
+        RealmManager.sharedInstance.connectToRealmDatabase(username: emailTextField.text!, password: passwordTextField.text!, register: false, viewControllerHandler: self) { (_) in
             MBProgressHUD.hide(for: self.view, animated: true)
 
             let mapViewController = self.storyboard!.instantiateViewController(withIdentifier: "navigationController")

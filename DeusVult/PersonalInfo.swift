@@ -14,3 +14,5 @@ class PersonalInfo: Object {
     dynamic var weight: Float = 0.0
     dynamic var height: Float = 0.0
 }
+
+

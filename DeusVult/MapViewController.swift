@@ -255,7 +255,19 @@ class MapViewController: UIViewController {
             } else {
                 let annotation = DeusVultPointAnnotation()
                 annotation.coordinate = position.value.coordinate
-                annotation.title = "Location of User"
+                let predicate = NSPredicate(format: "userId == %@", position.key)
+                let userName = RealmManager.sharedInstance.realmPublic!.objects(Users.self).filter(predicate).first
+                
+                if let name = userName {
+                    if !name.name.isEmpty {
+                        annotation.title = "Location of \(name.name)"
+                    } else {
+                        annotation.title = "Location of User"
+                    }
+                } else {
+                    annotation.title = "Location of User"
+                }
+                
                 annotation.id = position.key
                 mapView.addAnnotation(annotation)
             }
@@ -398,11 +410,13 @@ extension MapViewController: CLLocationManagerDelegate {
                         userLoc.longitude = newLocation.coordinate.longitude
                     }
                 } else {
+                    
                     try! RealmManager.sharedInstance.realmPublic!.write {
                         let userLocation = UserLocations()
                         userLocation.userID = userID
                         userLocation.longitude = newLocation.coordinate.longitude
                         userLocation.latitude = newLocation.coordinate.latitude
+                        
                         RealmManager.sharedInstance.realmPublic!.add(userLocation)
                     }
                 }
@@ -533,7 +547,19 @@ extension MapViewController: MKMapViewDelegate {
         
         for key in timeForAnnotation.keys {
             if(userLocation.location!.distance(from: CLLocation(latitude: key.coordinate.latitude, longitude: key.coordinate.longitude)) < 20) {
-                print("YEAH POINTS")
+                
+                try! RealmManager.sharedInstance.realm!.write {
+                    let userItem = UserItems()
+                    if(key.image == "sword") {
+                        userItem.itemType = ItemType.sword.rawValue
+                    } else {
+                        userItem.itemType = ItemType.gold.rawValue
+                    }
+                    userItem.money = key.money
+                    userItem.points = key.points
+                    RealmManager.sharedInstance.realm!.add(userItem)
+                }
+                
                 mapView.removeAnnotation(key)
                 timeForAnnotation.removeValue(forKey: key)
             }
