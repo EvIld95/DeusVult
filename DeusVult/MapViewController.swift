@@ -13,6 +13,7 @@ import RxCocoa
 import RxSwift
 import MBProgressHUD
 import RealmSwift
+import CoreMotion
 
 class MapViewController: UIViewController {
 
@@ -27,6 +28,8 @@ class MapViewController: UIViewController {
     @IBOutlet weak var viewWithStats: UIView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var stopButton: DeusVultButton!
+    @IBOutlet weak var muslimView: UIImageView!
+    
     
     var firstView: UIView!
     var lastView: UIView!
@@ -34,9 +37,9 @@ class MapViewController: UIViewController {
     var timer = Timer()
     var timerUpdatesAllUserPosition = Timer()
     var timerGenerateItems = Timer()
+    var timerShowMuslim = Timer()
     var locationManager = CLLocationManager()
     var run : Run!
-    var finish = Variable<Bool>(false)
     var running = false
     var isSignalStrength = Variable<Bool>(false)
     let gpsSignalAccuracy = 20.0
@@ -50,6 +53,12 @@ class MapViewController: UIViewController {
     var userWeight: Float?
     var timeForAnnotation = Dictionary<ItemPointAnnotation, Int>()
 
+    var motionManager: CMMotionManager!
+    
+    
+    var lastData: Double = 0.0 //for acceler.
+    var success = false
+    
     var seconds = 0 {
         didSet {
             let (hours, minutes, sec) = secondsToHoursMinutesSeconds(seconds: self.seconds)
@@ -103,6 +112,8 @@ class MapViewController: UIViewController {
         self.setupRx()
         self.setupViews()
         self.setupLocationManager()
+        self.setupCoreMotion()
+        
         
         mapView.delegate = self
 
@@ -129,7 +140,14 @@ class MapViewController: UIViewController {
         locationManager.requestAlwaysAuthorization()
     }
     
+    func setupCoreMotion() {
+        motionManager = CMMotionManager()
+        motionManager.accelerometerUpdateInterval = 0.1
+    }
+    
     func setupViews() {
+        self.muslimView.image = UIImage(named: "muslim")
+        self.muslimView.isHidden = true
         self.firstView = viewWithButtons
         self.lastView = viewWithStats
         self.stopButton.borderButtonColor = UIColor.darkGray
@@ -147,13 +165,6 @@ class MapViewController: UIViewController {
     }
     
     func setupRx() {
-        finish.asObservable().subscribe(onNext: { (finished) in
-            if(finished == true) {
-                self.timer.invalidate()
-                self.timerUpdatesAllUserPosition.invalidate()
-                self.locationManager.stopUpdatingLocation()
-            }
-        }).addDisposableTo(disposeBag)
         
         if(checkForGoodGPSSignal) {
             isSignalStrength.asObservable().subscribe(onNext: { (strength) in
@@ -235,7 +246,26 @@ class MapViewController: UIViewController {
             self.mapView.addAnnotation(annotation)
             
         }
-        
+    }
+    
+    func showMuslim() {
+        let randTime = Int(arc4random_uniform(UInt32(10)))
+        print("Muslim Rand Time: \(randTime)")
+        DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(randTime)) {
+            self.muslimView.isHidden = false
+            self.updateDataFromAccelerometr()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4, execute: {
+                self.motionManager.stopAccelerometerUpdates()
+                if(self.success == true) {
+                    self.success = false
+                } else {
+                    print("Failure")
+                }
+                self.muslimView.isHidden = true
+            })
+            
+        }
     }
     
     func getUsersLocation() {
@@ -304,11 +334,18 @@ class MapViewController: UIViewController {
                                      userInfo: nil,
                                      repeats: true)
         
+        
         timerGenerateItems = Timer.scheduledTimer(timeInterval: 20,
                                                            target: self,
                                                            selector: #selector(generateItems),
                                                            userInfo: nil,
                                                            repeats: true)
+        
+        timerShowMuslim = Timer.scheduledTimer(timeInterval: 25,
+                                                  target: self,
+                                                  selector: #selector(showMuslim),
+                                                  userInfo: nil,
+                                                  repeats: true)
         
         stopButton.isHidden = false
         viewTransition()
@@ -316,7 +353,6 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func stopButtonTapped(sender: UIButton!) {
-        finish.value = true
         running = false
         if(savedLocations.count > 0) {
             self.loadMap()
@@ -330,7 +366,8 @@ class MapViewController: UIViewController {
                 RealmManager.sharedInstance.realm!.add(run)
             }
         }
-        
+        self.locationManager.stopUpdatingLocation()
+        self.stopAllTimers()
         dismiss(animated: true, completion: nil)
     }
     
@@ -339,6 +376,13 @@ class MapViewController: UIViewController {
         displayTimeText += (minutes > 0) ? "\(minutes) min " : ""
         displayTimeText += "\(sec) sec"
         return displayTimeText
+    }
+    
+    func stopAllTimers() {
+        timer.invalidate()
+        timerShowMuslim.invalidate()
+        timerGenerateItems.invalidate()
+        timerUpdatesAllUserPosition.invalidate()
     }
     
 }
@@ -579,7 +623,26 @@ extension MapViewController: MKMapViewDelegate {
 }
 
 
+//CoreMotion
 
-
+extension MapViewController {
+    
+    
+    func updateDataFromAccelerometr() {
+        motionManager.startAccelerometerUpdates(to: OperationQueue.main) { [unowned self] (data, error) in
+            //print(data!.acceleration.x, data!.acceleration.y, data!.acceleration.z)
+            if error == nil {
+                if (data!.acceleration.x - self.lastData > 2) {
+                    print("Success")
+                    self.success = true
+                    self.muslimView.isHidden = true
+                }
+                self.lastData = data!.acceleration.x
+            }
+        }
+    }
+    
+    
+}
 
 

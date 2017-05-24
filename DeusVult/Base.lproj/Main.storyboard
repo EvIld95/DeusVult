@@ -298,16 +298,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yFZ-BW-Tky">
-                                                    <rect key="frame" x="15" y="5" width="33.5" height="20.5"/>
+                                                    <rect key="frame" x="15" y="5" width="34.5" height="19.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="Georgia" family="Georgia" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6xt-4Y-3Cp">
-                                                    <rect key="frame" x="15" y="25.5" width="44" height="14.5"/>
+                                                    <rect key="frame" x="15" y="24.5" width="41.5" height="14"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <fontDescription key="fontDescription" name="Georgia" family="Georgia" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -387,52 +387,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3wQ-oO-oM6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3901.5999999999999" y="886.50674662668678"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="73D-OD-Br1">
-            <objects>
-                <viewController id="sey-aI-IrY" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="x2l-f5-Glj"/>
-                        <viewControllerLayoutGuide type="bottom" id="IQy-HP-0uL"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="K1i-Qr-uoF">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="r22-eP-jEK">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="512"/>
-                                <subviews>
-                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="sNm-UV-qgX">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="256"/>
-                                    </mapView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="vMA-QV-fRl">
-                                        <rect key="frame" x="0.0" y="256" width="375" height="256"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PXl-9H-cyN">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
-                                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            </view>
-                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jnj-Ra-fv8">
-                                                <rect key="frame" x="0.0" y="128" width="375" height="128"/>
-                                                <color key="backgroundColor" red="1" green="0.9885548314" blue="0.32729200009999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            </view>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="r22-eP-jEK" firstAttribute="leading" secondItem="K1i-Qr-uoF" secondAttribute="leading" id="7wL-Pu-bcl"/>
-                            <constraint firstAttribute="trailing" secondItem="r22-eP-jEK" secondAttribute="trailing" id="Ged-Pi-vvC"/>
-                            <constraint firstItem="r22-eP-jEK" firstAttribute="top" secondItem="K1i-Qr-uoF" secondAttribute="top" id="N2E-Rh-j6R"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8e8-qV-ESG" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4711" y="890"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="mEj-c9-ZQK">
@@ -605,6 +559,10 @@
                                     <action selector="stopButtonTappedWithSender:" destination="FCN-oJ-zlc" eventType="touchUpInside" id="LdZ-Pi-Fa6"/>
                                 </connections>
                             </button>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GWy-fz-4Q4">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -622,6 +580,7 @@
                         <outlet property="containerView" destination="BTD-1d-E8e" id="uVA-YV-Rfv"/>
                         <outlet property="distanceLabel" destination="KH0-c6-ogf" id="ABg-th-Sjr"/>
                         <outlet property="mapView" destination="HBE-nz-7WV" id="APM-0t-l4k"/>
+                        <outlet property="muslimView" destination="GWy-fz-4Q4" id="1bM-Nc-gru"/>
                         <outlet property="paceLabel" destination="INs-DD-V0K" id="aRy-q3-X8w"/>
                         <outlet property="speedLabel" destination="85i-oN-ulE" id="WSE-em-RXb"/>
                         <outlet property="startButton" destination="XQ3-k4-ar9" id="A9c-4a-2Nc"/>
@@ -633,7 +592,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mcP-1U-yFe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4018" y="145"/>
+            <point key="canvasLocation" x="4016.8000000000002" y="144.3778110944528"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xKv-jd-ZtZ">
