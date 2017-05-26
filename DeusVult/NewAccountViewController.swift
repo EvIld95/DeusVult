@@ -54,6 +54,7 @@ class NewAccountViewController: UIViewController {
             user.level = 1
             user.name = self.nameTextField.text!
             user.userId = loggedUser.identity!
+            user.life = 100
             
             try! RealmManager.sharedInstance.realmPublic!.write {
                 RealmManager.sharedInstance.realmPublic!.add(user)

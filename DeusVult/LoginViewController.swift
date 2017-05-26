@@ -26,7 +26,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         RealmManager.sharedInstance.logoutAllUsers()
         self.setupTouchGesture()
-        self.playBackgroundMusic()
+        //self.playBackgroundMusic()
         
         KeyboardAvoiding.avoidingView = self.view
         let emailRx = emailTextField.rx.text.throttle(0.5,scheduler:MainScheduler.instance).map { (inputText) -> Bool in

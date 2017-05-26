@@ -13,4 +13,5 @@ class Users: Object {
     dynamic var name: String = ""
     dynamic var level: Int = 0
     dynamic var userId: String = ""
+    dynamic var life: Int = 0
 }

@@ -3,6 +3,7 @@ PODS:
     - Charts/Core (= 3.0.2)
   - Charts/Core (3.0.2)
   - IHKeyboardAvoiding (3.7)
+  - M13ProgressSuite (1.2.9)
   - MBProgressHUD (1.0.0)
   - Realm (2.5.1):
     - Realm/Headers (= 2.5.1)
@@ -16,6 +17,7 @@ PODS:
 DEPENDENCIES:
   - Charts
   - IHKeyboardAvoiding
+  - M13ProgressSuite
   - MBProgressHUD (~> 1.0)
   - RealmSwift
   - RxCocoa (~> 3.0)
@@ -24,12 +26,13 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Charts: 236d6ccdd0ce6feae151d89e829a7397381a21fd
   IHKeyboardAvoiding: 4c852fae85667469307678c65f14f5cac8a7be92
+  M13ProgressSuite: ea9f7263e73e9215e6849dfa54e29ee0ad6a145c
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   Realm: 32f86104d37c8521f864d4274050b38ba6190733
   RealmSwift: f719e7511c902b8908593e8f143f59e47931bdb6
   RxCocoa: 7dcb7a1860fc9cd0e23dae67ab105fc2916670b6
   RxSwift: 8fc9f2de6275a9101d518444e00bf32f1a42caac
 
-PODFILE CHECKSUM: 0cf42e49b3b1834575213941245a9e6fee47833c
+PODFILE CHECKSUM: 7b8027d40948eae4a3757f5593bb1a9a48569a7d
 
 COCOAPODS: 1.1.1

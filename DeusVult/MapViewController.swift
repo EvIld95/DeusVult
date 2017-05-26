@@ -29,6 +29,8 @@ class MapViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var stopButton: DeusVultButton!
     @IBOutlet weak var muslimView: UIImageView!
+    @IBOutlet weak var runTypeSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var intervalLabel: UILabel!
     
     
     var firstView: UIView!
@@ -38,6 +40,8 @@ class MapViewController: UIViewController {
     var timerUpdatesAllUserPosition = Timer()
     var timerGenerateItems = Timer()
     var timerShowMuslim = Timer()
+    var timerChangeInterval = Timer()
+    
     var locationManager = CLLocationManager()
     var run : Run!
     var running = false
@@ -53,6 +57,9 @@ class MapViewController: UIViewController {
     var userWeight: Float?
     var timeForAnnotation = Dictionary<ItemPointAnnotation, Int>()
 
+    let intervalTime = 60
+    var isSprint = false
+    
     var motionManager: CMMotionManager!
     
     
@@ -153,6 +160,8 @@ class MapViewController: UIViewController {
         self.stopButton.borderButtonColor = UIColor.darkGray
         self.stopButton.backgroundColor = UIColor.red
         isSignalStrength.value = false
+        self.intervalLabel.text = "Normal speed"
+        self.runTypeSegmentedControl.isEnabled = false
     }
     
     func initSetup() {
@@ -202,12 +211,10 @@ class MapViewController: UIViewController {
                 timeForAnnotation[key] = value - 1
             }
         }
+        
     }
     
     func updatesAllUsersPosition() {
-        //print("updateAllUserPosition")
-        //print(RealmManager.sharedInstance.realmPublic!.objects(UserLocations.self))
-        //print(realmUserLocation);
         getUsersLocation()
         addUsersPositionToMapView()
     }
@@ -233,10 +240,17 @@ class MapViewController: UIViewController {
             let distance = self.mapView.userLocation.location!.distance(from: location)
         
             annotation.title = "Item"
+            let itemName = (arc4random_uniform(UInt32(2)) % 2 == 0) ? "sword" : "treasure"
+            annotation.image = itemName
             
-            annotation.image = (arc4random_uniform(UInt32(2)) % 2 == 0) ? "sword" : "treasure"
-            annotation.points = 100
-            annotation.money = 100
+            if(itemName == "sword") {
+                annotation.points = Int(distance * 0.2)
+                annotation.money = 0
+            } else {
+                annotation.points = 0
+                annotation.money = Int(distance * 0.1)
+            }
+            
         
             let assumeSpeed = 1.0//5.0
             print("Distance \(distance)")
@@ -261,6 +275,16 @@ class MapViewController: UIViewController {
                     self.success = false
                 } else {
                     print("Failure")
+                    
+                    let predicate = NSPredicate(format: "userId = %@", RealmManager.sharedInstance.currentLoggedUser!.identity!)
+                    let user = RealmManager.sharedInstance.realmPublic!.objects(Users.self).filter(predicate).first!
+                    if(user.life >= 5) {
+                        user.life = user.life - 5
+                        try! RealmManager.sharedInstance.realmPublic!.write {
+                            RealmManager.sharedInstance.realmPublic!.add(user)
+                        }
+                    }
+                    
                 }
                 self.muslimView.isHidden = true
             })
@@ -347,9 +371,15 @@ class MapViewController: UIViewController {
                                                   userInfo: nil,
                                                   repeats: true)
         
+        
+        self.runTypeSegmentedControl.isEnabled = true
         stopButton.isHidden = false
         viewTransition()
         running = true
+    }
+    
+    func changeRunSpeed() {
+        self.isSprint = !self.isSprint
     }
     
     @IBAction func stopButtonTapped(sender: UIButton!) {
@@ -363,6 +393,7 @@ class MapViewController: UIViewController {
                 run.distance = distance
                 run.time = seconds
                 run.maxSpeed = 10
+                run.calories = calories
                 RealmManager.sharedInstance.realm!.add(run)
             }
         }
@@ -383,6 +414,24 @@ class MapViewController: UIViewController {
         timerShowMuslim.invalidate()
         timerGenerateItems.invalidate()
         timerUpdatesAllUserPosition.invalidate()
+    }
+    
+    @IBAction func indexChanged(sender: UISegmentedControl) {
+        switch runTypeSegmentedControl.selectedSegmentIndex {
+        case 0:
+            timerChangeInterval.invalidate()
+            self.intervalLabel.isHidden = true
+            
+        case 1:
+            timerChangeInterval = Timer.scheduledTimer(timeInterval: TimeInterval(intervalTime),
+                                                       target: self,
+                                                       selector: #selector(changeRunSpeed),
+                                                       userInfo: nil,
+                                                       repeats: true)
+            self.intervalLabel.isHidden = false
+        default:
+            print("Cos nie tak")
+        }
     }
     
 }
@@ -518,7 +567,6 @@ extension MapViewController: MKMapViewDelegate {
         return renderer
     }
     
-    
     func polyline() -> MKPolyline {
         var coords = [CLLocationCoordinate2D]()
         
@@ -538,20 +586,12 @@ extension MapViewController: MKMapViewDelegate {
         }
     }
     
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         guard annotation is ItemPointAnnotation else {
             return nil
         }
-        var reuseIdentifier = ""
-        //if annotation is ItemPointAnnotation {
-            print("Muslim")
-        reuseIdentifier = "pinItem"
-        //}
-        //else {
-        //    reuseIdentifier = "pinStandard"
-        //}
+        var reuseIdentifier = "pinItem"
         
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
         
@@ -606,6 +646,24 @@ extension MapViewController: MKMapViewDelegate {
                 
                 mapView.removeAnnotation(key)
                 timeForAnnotation.removeValue(forKey: key)
+            }
+        }
+        
+        if(runTypeSegmentedControl.selectedSegmentIndex == 1) {
+            if self.isSprint {
+                if self.currentSpeed < 10 {
+                    self.intervalLabel.textColor = UIColor.red
+                } else {
+                    self.intervalLabel.textColor = UIColor.green
+                }
+                self.intervalLabel.text = "Run fast - (min. 10km/h)"
+            } else {
+                if (4..<6) ~= self.currentSpeed {
+                    self.intervalLabel.textColor = UIColor.red
+                } else {
+                    self.intervalLabel.textColor = UIColor.green
+                }
+                self.intervalLabel.text = "Normal pace - (between 4km/h - 6km/h)"
             }
         }
         

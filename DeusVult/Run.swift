@@ -16,5 +16,6 @@ class Run : Object {
     dynamic var distance = 0.0
     dynamic var averageSpeed = 0.0
     dynamic var maxSpeed = 0.0
+    dynamic var calories = 0.0
     let locations = List<LocationRM>()
 }
