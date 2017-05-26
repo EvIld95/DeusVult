@@ -12,6 +12,13 @@ func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
     return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
 }
 
+func getTimeCorrectFormat(hours: Int, minutes: Int, sec: Int) -> String {
+    var displayTimeText = (hours > 0) ? "\(hours) h " : ""
+    displayTimeText += (minutes > 0) ? "\(minutes) min " : ""
+    displayTimeText += "\(sec) sec"
+    return displayTimeText
+}
+
 func calculateBurnedCalories(avgSpeed: Double, seconds: Int, weight: Double) -> Double{
     enum METRatioActivity: Double {
         case lessThan1kmPerHour = 1

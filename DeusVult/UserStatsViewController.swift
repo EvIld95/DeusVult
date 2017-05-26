@@ -45,8 +45,9 @@ class UserStatsViewController: UIViewController {
             return result + item.points
         }
         
-        totalDistanceLabel.text = "\(totalDistance)"
-        totalTimeLabel.text = "\(totalTime)"
+        totalDistanceLabel.text = "\(totalDistance.roundTo(places: 1)) m"
+        let (h,m,s) = secondsToHoursMinutesSeconds(seconds: totalTime)
+        totalTimeLabel.text = getTimeCorrectFormat(hours: h, minutes: m, sec: s)
         pointsLabel.text = "\(totalPoints)"
         moneyLabel.text = "\(totalMoney)"
         levelLabel.text = "\(user.level)"

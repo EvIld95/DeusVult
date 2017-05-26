@@ -69,7 +69,7 @@ class MapViewController: UIViewController {
     var seconds = 0 {
         didSet {
             let (hours, minutes, sec) = secondsToHoursMinutesSeconds(seconds: self.seconds)
-            self.timeLabel.text = self.getTimeCorrectFormat(hours: hours, minutes: minutes, sec: sec)
+            self.timeLabel.text = getTimeCorrectFormat(hours: hours, minutes: minutes, sec: sec)
         }
     }
     
@@ -402,12 +402,6 @@ class MapViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    func getTimeCorrectFormat(hours: Int, minutes: Int, sec: Int) -> String {
-        var displayTimeText = (hours > 0) ? "\(hours) h " : ""
-        displayTimeText += (minutes > 0) ? "\(minutes) min " : ""
-        displayTimeText += "\(sec) sec"
-        return displayTimeText
-    }
     
     func stopAllTimers() {
         timer.invalidate()
@@ -659,9 +653,9 @@ extension MapViewController: MKMapViewDelegate {
                 self.intervalLabel.text = "Run fast - (min. 10km/h)"
             } else {
                 if (4..<6) ~= self.currentSpeed {
-                    self.intervalLabel.textColor = UIColor.red
-                } else {
                     self.intervalLabel.textColor = UIColor.green
+                } else {
+                    self.intervalLabel.textColor = UIColor.red
                 }
                 self.intervalLabel.text = "Normal pace - (between 4km/h - 6km/h)"
             }
@@ -674,7 +668,7 @@ extension MapViewController: MKMapViewDelegate {
             let time = timeForAnnotation[view.annotation! as! ItemPointAnnotation]
             let label = view.rightCalloutAccessoryView! as! UILabel
             let (h,m,s) = secondsToHoursMinutesSeconds(seconds: time!)
-            label.text = self.getTimeCorrectFormat(hours: h, minutes: m, sec: s)
+            label.text = getTimeCorrectFormat(hours: h, minutes: m, sec: s)
         }
     }
     
