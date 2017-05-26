@@ -279,9 +279,9 @@ class MapViewController: UIViewController {
                     let predicate = NSPredicate(format: "userId = %@", RealmManager.sharedInstance.currentLoggedUser!.identity!)
                     let user = RealmManager.sharedInstance.realmPublic!.objects(Users.self).filter(predicate).first!
                     if(user.life >= 5) {
-                        user.life = user.life - 5
+                        
                         try! RealmManager.sharedInstance.realmPublic!.write {
-                            RealmManager.sharedInstance.realmPublic!.add(user)
+                            user.life = user.life - 5
                         }
                     }
                     
