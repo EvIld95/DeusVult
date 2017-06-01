@@ -121,7 +121,6 @@ class MapViewController: UIViewController {
         self.setupLocationManager()
         self.setupCoreMotion()
         
-        
         mapView.delegate = self
 
     }
@@ -161,7 +160,7 @@ class MapViewController: UIViewController {
         self.stopButton.backgroundColor = UIColor.red
         isSignalStrength.value = false
         self.intervalLabel.text = "Normal speed"
-        self.runTypeSegmentedControl.isEnabled = false
+        self.runTypeSegmentedControl.isEnabled = true
     }
     
     func initSetup() {
@@ -225,7 +224,7 @@ class MapViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(randTime)) {
           
             let annotation = ItemPointAnnotation()
-            let maxDistance = 20
+            let maxDistance = 40
             let randPlus = Double(arc4random_uniform(UInt32(maxDistance))) + 1.0
             let randMinus = Double(arc4random_uniform(UInt32(maxDistance)))
             
@@ -263,7 +262,7 @@ class MapViewController: UIViewController {
     }
     
     func showMuslim() {
-        let randTime = Int(arc4random_uniform(UInt32(10)))
+        let randTime = Int(arc4random_uniform(UInt32(30)))
         print("Muslim Rand Time: \(randTime)")
         DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(randTime)) {
             self.muslimView.isHidden = false
@@ -277,11 +276,14 @@ class MapViewController: UIViewController {
                     print("Failure")
                     
                     let predicate = NSPredicate(format: "userId = %@", RealmManager.sharedInstance.currentLoggedUser!.identity!)
-                    let user = RealmManager.sharedInstance.realmPublic!.objects(Users.self).filter(predicate).first!
-                    if(user.life >= 5) {
-                        
-                        try! RealmManager.sharedInstance.realmPublic!.write {
-                            user.life = user.life - 5
+                    let user = RealmManager.sharedInstance.realmPublic!.objects(Users.self).filter(predicate).first
+                    if let user = user {
+                        if(user.life >= 5) {
+                            
+                            try! RealmManager.sharedInstance.realmPublic!.write {
+                                user.life = user.life - 5
+                                
+                            }
                         }
                     }
                     
@@ -365,15 +367,19 @@ class MapViewController: UIViewController {
                                                            userInfo: nil,
                                                            repeats: true)
         
-        timerShowMuslim = Timer.scheduledTimer(timeInterval: 25,
+        timerShowMuslim = Timer.scheduledTimer(timeInterval: 60,
                                                   target: self,
                                                   selector: #selector(showMuslim),
                                                   userInfo: nil,
                                                   repeats: true)
         
         
-        self.runTypeSegmentedControl.isEnabled = true
-        stopButton.isHidden = false
+        self.runTypeSegmentedControl.isEnabled = false
+        self.runTypeSegmentedControl.isHidden = true;
+        self.stopButton.isHidden = false
+        if(runTypeSegmentedControl.selectedSegmentIndex == 1) {
+            self.intervalLabel.isHidden = false
+        }
         viewTransition()
         running = true
     }
@@ -394,6 +400,7 @@ class MapViewController: UIViewController {
                 run.time = seconds
                 run.maxSpeed = 10
                 run.calories = calories
+                run.type = (self.runTypeSegmentedControl.selectedSegmentIndex == 0) ? "normal" : "interval"
                 RealmManager.sharedInstance.realm!.add(run)
             }
         }
@@ -422,7 +429,6 @@ class MapViewController: UIViewController {
                                                        selector: #selector(changeRunSpeed),
                                                        userInfo: nil,
                                                        repeats: true)
-            self.intervalLabel.isHidden = false
         default:
             print("Cos nie tak")
         }
@@ -438,7 +444,6 @@ class MapViewController: UIViewController {
 extension MapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        print("DidChangeAuthorization")
         if status == .authorizedAlways {
             print("AuthorizationAlways")
             mapView.showsUserLocation = true
@@ -625,7 +630,7 @@ extension MapViewController: MKMapViewDelegate {
         
         for key in timeForAnnotation.keys {
             if(userLocation.location!.distance(from: CLLocation(latitude: key.coordinate.latitude, longitude: key.coordinate.longitude)) < 20) {
-                
+                //Successfuly get item
                 try! RealmManager.sharedInstance.realm!.write {
                     let userItem = UserItems()
                     if(key.image == "sword") {
@@ -637,7 +642,7 @@ extension MapViewController: MKMapViewDelegate {
                     userItem.points = key.points
                     RealmManager.sharedInstance.realm!.add(userItem)
                 }
-                
+                SoundPlayerManager.sharedInstance.play(mp3Name: "success", infiniteLoop: false, extensionFormat: "wav");
                 mapView.removeAnnotation(key)
                 timeForAnnotation.removeValue(forKey: key)
             }

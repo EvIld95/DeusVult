@@ -22,7 +22,6 @@
 		F7452B511EC8A78700218A7C /* Run.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7452B501EC8A78700218A7C /* Run.swift */; };
 		F7452B531EC8A7A400218A7C /* LocationRM.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7452B521EC8A7A400218A7C /* LocationRM.swift */; };
 		F7452B551EC8D89200218A7C /* GameTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7452B541EC8D89200218A7C /* GameTypeViewController.swift */; };
-		F7452B571EC8D9D500218A7C /* Explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F7452B561EC8D9D500218A7C /* Explosion.mp3 */; };
 		F75C02F51ECE3C23001F454A /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75C02F41ECE3C23001F454A /* HistoryViewController.swift */; };
 		F75C02F71ECEF7D3001F454A /* ShowRunViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75C02F61ECEF7D3001F454A /* ShowRunViewController.swift */; };
 		F75C02F91ED0DC8A001F454A /* MulticolorPolylineSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75C02F81ED0DC8A001F454A /* MulticolorPolylineSegment.swift */; };
@@ -30,6 +29,8 @@
 		F78AB2A41ED38B31007536C6 /* MuslimPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB2A31ED38B31007536C6 /* MuslimPosition.swift */; };
 		F78AB2A71ED38DFE007536C6 /* MuslimPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB2A61ED38DFE007536C6 /* MuslimPointAnnotation.swift */; };
 		F78AB2A91ED440D6007536C6 /* ItemPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78AB2A81ED440D6007536C6 /* ItemPointAnnotation.swift */; };
+		F78DB8261EE074BF005CF378 /* success.wav in Resources */ = {isa = PBXBuildFile; fileRef = F78DB8251EE074BF005CF378 /* success.wav */; };
+		F78DB82A1EE0822E005CF378 /* protector.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F78DB8291EE0822E005CF378 /* protector.mp3 */; };
 		F7B6FC8C1EC8E8C000F59703 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC8B1EC8E8C000F59703 /* Helpers.swift */; };
 		F7B6FC8E1EC8E95200F59703 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC8D1EC8E95200F59703 /* Double+Extension.swift */; };
 		F7B6FC901EC9ECC500F59703 /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B6FC8F1EC9ECC500F59703 /* NewAccountViewController.swift */; };
@@ -62,7 +63,6 @@
 		F7452B501EC8A78700218A7C /* Run.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Run.swift; sourceTree = "<group>"; };
 		F7452B521EC8A7A400218A7C /* LocationRM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationRM.swift; sourceTree = "<group>"; };
 		F7452B541EC8D89200218A7C /* GameTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTypeViewController.swift; sourceTree = "<group>"; };
-		F7452B561EC8D9D500218A7C /* Explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Explosion.mp3; sourceTree = "<group>"; };
 		F75C02F41ECE3C23001F454A /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		F75C02F61ECEF7D3001F454A /* ShowRunViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowRunViewController.swift; sourceTree = "<group>"; };
 		F75C02F81ED0DC8A001F454A /* MulticolorPolylineSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MulticolorPolylineSegment.swift; sourceTree = "<group>"; };
@@ -70,6 +70,8 @@
 		F78AB2A31ED38B31007536C6 /* MuslimPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MuslimPosition.swift; sourceTree = "<group>"; };
 		F78AB2A61ED38DFE007536C6 /* MuslimPointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MuslimPointAnnotation.swift; sourceTree = "<group>"; };
 		F78AB2A81ED440D6007536C6 /* ItemPointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemPointAnnotation.swift; sourceTree = "<group>"; };
+		F78DB8251EE074BF005CF378 /* success.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = success.wav; sourceTree = "<group>"; };
+		F78DB8291EE0822E005CF378 /* protector.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = protector.mp3; sourceTree = "<group>"; };
 		F7B6FC8B1EC8E8C000F59703 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		F7B6FC8D1EC8E95200F59703 /* Double+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		F7B6FC8F1EC9ECC500F59703 /* NewAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAccountViewController.swift; sourceTree = "<group>"; };
@@ -145,7 +147,8 @@
 				F7452B341EC87C5100218A7C /* Assets.xcassets */,
 				F7452B361EC87C5100218A7C /* LaunchScreen.storyboard */,
 				F7452B391EC87C5100218A7C /* Info.plist */,
-				F7452B561EC8D9D500218A7C /* Explosion.mp3 */,
+				F78DB8291EE0822E005CF378 /* protector.mp3 */,
+				F78DB8251EE074BF005CF378 /* success.wav */,
 			);
 			path = DeusVult;
 			sourceTree = "<group>";
@@ -297,10 +300,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F78DB82A1EE0822E005CF378 /* protector.mp3 in Resources */,
+				F78DB8261EE074BF005CF378 /* success.wav in Resources */,
 				F7452B381EC87C5100218A7C /* LaunchScreen.storyboard in Resources */,
 				F7452B351EC87C5100218A7C /* Assets.xcassets in Resources */,
 				F7452B331EC87C5100218A7C /* Main.storyboard in Resources */,
-				F7452B571EC8D9D500218A7C /* Explosion.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

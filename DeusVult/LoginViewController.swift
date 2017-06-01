@@ -13,6 +13,7 @@ import IHKeyboardAvoiding
 import MBProgressHUD
 import RealmSwift
 
+
 class LoginViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -24,9 +25,10 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         RealmManager.sharedInstance.logoutAllUsers()
         self.setupTouchGesture()
-        //self.playBackgroundMusic()
+        self.playBackgroundMusic()
         
         KeyboardAvoiding.avoidingView = self.view
         let emailRx = emailTextField.rx.text.throttle(0.5,scheduler:MainScheduler.instance).map { (inputText) -> Bool in
@@ -74,7 +76,7 @@ class LoginViewController: UIViewController {
     }
     
     func playBackgroundMusic() {
-        self.soundPlayerManager.play(mp3Name: "Explosion", infiniteLoop: true)
+        self.soundPlayerManager.play(mp3Name: "protector", infiniteLoop: true, extensionFormat: "mp3")
     }
     
     

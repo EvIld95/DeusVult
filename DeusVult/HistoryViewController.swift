@@ -15,6 +15,7 @@ import RealmSwift
 class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var runTypeSegmentedControl: UISegmentedControl!
     
     var runHistory : Results<Run>!
     var selectedRun : Run?
@@ -23,6 +24,7 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
 
         tableView.delegate = self
         tableView.dataSource = self
+        //tableView.tableFooterView = UIView(frame: .zero)
         
     }
 
@@ -33,7 +35,8 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        runHistory = RealmManager.sharedInstance.realm!.objects(Run.self)
+        let predicate = NSPredicate(format: "type = %@", "normal")
+        runHistory = RealmManager.sharedInstance.realm!.objects(Run.self).filter(predicate)
         tableView.reloadData()
     }
     
@@ -71,6 +74,21 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! ShowRunViewController
         destinationVC.run = selectedRun!
+    }
+    
+    @IBAction func indexChanged(sender: UISegmentedControl) {
+        switch runTypeSegmentedControl.selectedSegmentIndex {
+        case 0:
+            let predicate = NSPredicate(format: "type = %@", "normal")
+            runHistory = RealmManager.sharedInstance.realm!.objects(Run.self).filter(predicate)
+            tableView.reloadData()
+        case 1:
+            let predicate = NSPredicate(format: "type = %@", "interval")
+            runHistory = RealmManager.sharedInstance.realm!.objects(Run.self).filter(predicate)
+            tableView.reloadData()
+        default:
+            print("Default")
+        }
     }
 
 }

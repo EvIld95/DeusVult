@@ -32,6 +32,8 @@ class NewAccountViewController: UIViewController {
         KeyboardAvoiding.avoidingView = self.view
         self.setupRx()
         self.setupTouchGesture()
+        
+    
     }
 
     override func didReceiveMemoryWarning() {
@@ -135,13 +137,23 @@ class NewAccountViewController: UIViewController {
             }).addDisposableTo(disposeBag)
     }
     
+    func backToMenu() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
     func hideKeyboard() {
         self.view.endEditing(true)
     }
     
+    
+    
     func setupTouchGesture() {
+        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(backToMenu))
+        swipeGestureRecognizer.direction = .right
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.hideKeyboard))
         self.view.addGestureRecognizer(tapGestureRecognizer)
+        self.view.addGestureRecognizer(swipeGestureRecognizer)
     }
 
 }

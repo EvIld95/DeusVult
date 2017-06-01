@@ -30,7 +30,7 @@ class UserStatsViewController: UIViewController {
         let runs = RealmManager.sharedInstance.realm!.objects(Run.self)
         let items = RealmManager.sharedInstance.realm!.objects(UserItems.self)
         let predicate = NSPredicate(format: "userId = %@", RealmManager.sharedInstance.currentLoggedUser!.identity!)
-        let user = RealmManager.sharedInstance.realmPublic!.objects(Users.self).filter(predicate).first!
+        let user = RealmManager.sharedInstance.realmPublic!.objects(Users.self).filter(predicate).first
         
         let totalDistance = runs.reduce(0.0) { (result, run) -> Double in
             return result + run.distance
@@ -50,8 +50,11 @@ class UserStatsViewController: UIViewController {
         totalTimeLabel.text = getTimeCorrectFormat(hours: h, minutes: m, sec: s)
         pointsLabel.text = "\(totalPoints)"
         moneyLabel.text = "\(totalMoney)"
-        levelLabel.text = "\(user.level)"
-        
+        if let user = user {
+            levelLabel.text = "\(user.level)"
+        } else {
+            levelLabel.text = "1"
+        }
         let calendar =  Calendar(identifier: .gregorian)
         var dateComponent = DateComponents()
         dateComponent.day = -3
@@ -97,7 +100,7 @@ class UserStatsViewController: UIViewController {
         self.strengthProgressBarView.addSubview(strengthProgressBorderedBarView)
         
         lifeProgressBorderedBarView = M13ProgressViewBorderedBar(frame: CGRect(x: 0, y: self.lifeProgressBarView.frame.height/4, width: self.lifeProgressBarView.frame.width, height: self.lifeProgressBarView.frame.height/2))
-        lifeProgressBorderedBarView.setProgress(CGFloat(user.life)/100, animated: true)
+        lifeProgressBorderedBarView.setProgress(CGFloat(user?.life ?? 100)/100, animated: true)
         lifeProgressBorderedBarView.cornerType = M13ProgressViewBorderedBarCornerTypeRounded
         lifeProgressBorderedBarView.cornerRadius = 8.0
         lifeProgressBorderedBarView.animationDuration = 1.5
