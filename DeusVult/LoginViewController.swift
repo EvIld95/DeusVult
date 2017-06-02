@@ -38,7 +38,7 @@ class LoginViewController: UIViewController {
             return (inputText?.characters.count ?? 0) > 0
         }
         
-        emailTextField.text = "jan@gmail.com"
+        emailTextField.text = "konto@gmail.com"
         passwordTextField.text = "deus"
         Observable.combineLatest(emailRx, passwordRx).subscribe(onNext: { (email, password) in
             if(email == true && password == true) {

@@ -16,7 +16,7 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var runTypeSegmentedControl: UISegmentedControl!
-    
+    var label: UILabel?
     var runHistory : Results<Run>!
     var selectedRun : Run?
     override func viewDidLoad() {
@@ -37,6 +37,14 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewWillAppear(true)
         let predicate = NSPredicate(format: "type = %@", "normal")
         runHistory = RealmManager.sharedInstance.realm!.objects(Run.self).filter(predicate)
+        if(runHistory.count == 0) {
+            label = UILabel(frame: CGRect(x: self.view.frame.width/2-100, y: self.view.frame.height/2, width: 200, height: 50.0))
+            label!.textColor = UIColor.red
+            label!.textAlignment = .center
+            label!.text = "Empty Run History"
+            self.view.addSubview(label!)
+            
+        }
         tableView.reloadData()
     }
     
@@ -81,10 +89,12 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
         case 0:
             let predicate = NSPredicate(format: "type = %@", "normal")
             runHistory = RealmManager.sharedInstance.realm!.objects(Run.self).filter(predicate)
+            label?.isHidden = runHistory.count > 0
             tableView.reloadData()
         case 1:
             let predicate = NSPredicate(format: "type = %@", "interval")
             runHistory = RealmManager.sharedInstance.realm!.objects(Run.self).filter(predicate)
+            label?.isHidden = runHistory.count > 0
             tableView.reloadData()
         default:
             print("Default")
