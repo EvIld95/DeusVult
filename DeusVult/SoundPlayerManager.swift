@@ -8,6 +8,7 @@
 
 import Foundation
 import AVFoundation
+import AudioToolbox
 
 class SoundPlayerManager {
     static let sharedInstance = SoundPlayerManager()
@@ -29,4 +30,14 @@ class SoundPlayerManager {
     func stop() {
         self.player?.stop()
     }
+    
+    func playEffect(name: String, extensionFormat: String) {
+        if let soundURL = Bundle.main.url(forResource: name, withExtension: extensionFormat) {
+            var mySound: SystemSoundID = 0
+            AudioServicesCreateSystemSoundID(soundURL as CFURL, &mySound)
+            AudioServicesPlaySystemSound(mySound);
+        }
+    }
+    
+    
 }

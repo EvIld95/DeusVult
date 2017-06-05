@@ -382,6 +382,7 @@ class MapViewController: UIViewController {
         }
         viewTransition()
         running = true
+        SoundPlayerManager.sharedInstance.stop()
     }
     
     func changeRunSpeed() {
@@ -642,7 +643,7 @@ extension MapViewController: MKMapViewDelegate {
                     userItem.points = key.points
                     RealmManager.sharedInstance.realm!.add(userItem)
                 }
-                SoundPlayerManager.sharedInstance.play(mp3Name: "success", infiniteLoop: false, extensionFormat: "wav");
+                SoundPlayerManager.sharedInstance.playEffect(name: "success", extensionFormat: "wav")
                 mapView.removeAnnotation(key)
                 timeForAnnotation.removeValue(forKey: key)
             }
@@ -691,6 +692,7 @@ extension MapViewController {
             if error == nil {
                 if (data!.acceleration.x - self.lastData > 2) {
                     print("Success")
+                    SoundPlayerManager.sharedInstance.playEffect(name: "success", extensionFormat: "wav")
                     self.success = true
                     self.muslimView.isHidden = true
                 }

@@ -21,10 +21,9 @@ class HistoryViewController: UIViewController, UITableViewDelegate, UITableViewD
     var selectedRun : Run?
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         tableView.delegate = self
         tableView.dataSource = self
-        //tableView.tableFooterView = UIView(frame: .zero)
         
     }
 
