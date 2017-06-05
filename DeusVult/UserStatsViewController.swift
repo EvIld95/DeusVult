@@ -95,8 +95,8 @@ class UserStatsViewController: UIViewController {
         strengthProgressBorderedBarView.cornerType = M13ProgressViewBorderedBarCornerTypeRounded
         strengthProgressBorderedBarView.cornerRadius = 8.0
         strengthProgressBorderedBarView.animationDuration = 1.5
-        strengthProgressBorderedBarView.secondaryColor = UIColor.green
-        strengthProgressBorderedBarView.primaryColor = UIColor.green
+        strengthProgressBorderedBarView.secondaryColor = UIColor(red: 0, green: 130/255, blue: 0, alpha: 1)
+        strengthProgressBorderedBarView.primaryColor = UIColor(red: 0, green: 110/255, blue: 0, alpha: 1)
         self.strengthProgressBarView.addSubview(strengthProgressBorderedBarView)
         
         lifeProgressBorderedBarView = M13ProgressViewBorderedBar(frame: CGRect(x: 0, y: self.lifeProgressBarView.frame.height/4, width: self.lifeProgressBarView.frame.width, height: self.lifeProgressBarView.frame.height/2))
@@ -105,7 +105,8 @@ class UserStatsViewController: UIViewController {
         lifeProgressBorderedBarView.cornerRadius = 8.0
         lifeProgressBorderedBarView.animationDuration = 1.5
         lifeProgressBorderedBarView.secondaryColor = UIColor.red
-        lifeProgressBorderedBarView.primaryColor = UIColor.red
+        lifeProgressBorderedBarView.primaryColor = UIColor(red: 180/255, green: 10/255, blue: 0, alpha: 1)
+        
         self.lifeProgressBarView.addSubview(lifeProgressBorderedBarView)
         
         

@@ -23,6 +23,7 @@ class ShowRunViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad();
         
+        lineChartView.backgroundColor = UIColor.black
         self.preapreChartView()
         self.displayPaceData()
         
@@ -40,8 +41,10 @@ class ShowRunViewController: UIViewController {
         lineChartView.xAxis.drawGridLinesEnabled = false
         lineChartView.xAxis.drawAxisLineEnabled = false
         lineChartView.xAxis.labelPosition = .bottom
+        lineChartView.xAxis.labelTextColor = UIColor.red
         lineChartView.leftAxis.drawAxisLineEnabled = false
         lineChartView.leftAxis.drawGridLinesEnabled = false
+        lineChartView.leftAxis.labelTextColor = UIColor.red
         lineChartView.xAxis.granularityEnabled = true
         lineChartView.xAxis.granularity = 3.0
         
@@ -70,11 +73,11 @@ class ShowRunViewController: UIViewController {
         chartDataSet.drawCirclesEnabled = true
         chartDataSet.lineWidth = 2.0
         chartDataSet.circleRadius = 2.0
-        chartDataSet.circleColors = [UIColor(red: 53.0/255.0, green: 92.0/255.0, blue: 125.0/255.0, alpha: 1.0)]
+        chartDataSet.circleColors = [UIColor(red: 230.0/255.0, green: 20.0/255.0, blue: 0/255.0, alpha: 1.0)]
         chartDataSet.drawFilledEnabled = true
-        chartDataSet.fillColor = UIColor(red: 192.0/255.0, green: 108.0/255.0, blue: 132.0/255.0, alpha: 1.0)
+        chartDataSet.fillColor = UIColor(red: 180.0/255.0, green: 10.0/255.0, blue: 0, alpha: 1.0)
         chartDataSet.drawValuesEnabled = false
-        chartDataSet.colors = [UIColor(red: 53.0/255.0, green: 92.0/255.0, blue: 125.0/255.0, alpha: 1.0)]
+        chartDataSet.colors = [UIColor(red: 230.0/255.0, green: 20.0/255.0, blue: 0/255.0, alpha: 1.0)]
         
         
         let chartData = LineChartData(dataSet: chartDataSet)
@@ -97,11 +100,11 @@ class ShowRunViewController: UIViewController {
         chartDataSet.drawCirclesEnabled = true
         chartDataSet.lineWidth = 2.0
         chartDataSet.circleRadius = 2.0
-        chartDataSet.circleColors = [UIColor.green]
+        chartDataSet.circleColors = [UIColor(red: 230.0/255.0, green: 20.0/255.0, blue: 0/255.0, alpha: 1.0)]
         chartDataSet.drawFilledEnabled = true
-        chartDataSet.fillColor = UIColor.blue
+        chartDataSet.fillColor = UIColor(red: 180.0/255.0, green: 10.0/255.0, blue: 0, alpha: 1.0)
         chartDataSet.drawValuesEnabled = false
-        chartDataSet.colors = [UIColor.green]
+        chartDataSet.colors = [UIColor(red: 230.0/255.0, green: 20.0/255.0, blue: 0/255.0, alpha: 1.0)]
         
         
         let chartData = LineChartData(dataSet: chartDataSet)
