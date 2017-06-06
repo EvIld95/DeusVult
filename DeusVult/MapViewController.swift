@@ -152,7 +152,7 @@ class MapViewController: UIViewController {
     }
     
     func setupViews() {
-        self.muslimView.image = UIImage(named: "muslim")
+        self.muslimView.image = UIImage(named: "saracen")
         self.muslimView.isHidden = true
         self.firstView = viewWithButtons
         self.lastView = viewWithStats
