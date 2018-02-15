@@ -114,6 +114,8 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         
         self.realmUserLocation = RealmManager.sharedInstance.realmPublic!.objects(UserLocations.self)
+        
+        
         self.userWeight = RealmManager.sharedInstance.realm!.objects(PersonalInfo.self).first?.weight
         self.initSetup()
         self.setupRx()

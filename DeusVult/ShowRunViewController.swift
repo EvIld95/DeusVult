@@ -55,8 +55,6 @@ class ShowRunViewController: UIViewController {
         
         lineChartView.xAxis.drawLimitLinesBehindDataEnabled = false
         lineChartView.drawMarkers = false
-        
-       
     }
     
     func displayPaceData() {
@@ -82,7 +80,6 @@ class ShowRunViewController: UIViewController {
         
         let chartData = LineChartData(dataSet: chartDataSet)
         lineChartView.data = chartData
-        
         
     }
     

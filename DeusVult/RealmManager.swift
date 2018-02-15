@@ -17,7 +17,7 @@ class RealmManager {
     var currentLoggedUser: SyncUser?
     //40.68.240.132
     //127.0.0.1
-    private let serverAddress = "http://40.68.240.132:9080"
+    private let serverAddress = "http://52.166.88.154:9080"
     
     func connectToRealmDatabase(username:String, password: String, register: Bool, viewControllerHandler: UIViewController!, completion: @escaping (_ user: SyncUser) -> ()) {
         SyncUser.logIn(with: .usernamePassword(username: username, password: password, register: register), server: URL(string: serverAddress)!) { user, error in
@@ -34,7 +34,7 @@ class RealmManager {
             
             DispatchQueue.main.async {
                 let configuration = Realm.Configuration(
-                    syncConfiguration: SyncConfiguration(user: user, realmURL: URL(string: "realm://40.68.240.132:9080/~/deusvult")!)
+                    syncConfiguration: SyncConfiguration(user: user, realmURL: URL(string: "realm://52.166.88.154:9080/~/deusvult")!)
                 )
                 
                 self.realm = try! Realm(configuration: configuration)
@@ -46,7 +46,7 @@ class RealmManager {
     }
     
     private func connectToRealmPublicDatabase(viewControllerHandler: UIViewController!, mainUser: SyncUser, completion: @escaping (_ syncMainUser: SyncUser) -> ()) {
-        SyncUser.logIn(with: .usernamePassword(username: "pablo.szudrowicz@gmail.com", password: "deus", register: false), server: URL(string: serverAddress)!) { user, error in
+        SyncUser.logIn(with: .usernamePassword(username: "pablo@gmail.com", password: "qwerty", register: false), server: URL(string: serverAddress)!) { user, error in
             guard let user = user else {
                 DispatchQueue.main.sync {
                     MBProgressHUD.hide(for: viewControllerHandler.view, animated: true)
@@ -65,7 +65,7 @@ class RealmManager {
                 
                 
                 let configurationPublic = Realm.Configuration(
-                    syncConfiguration: SyncConfiguration(user: user, realmURL: URL(string: "realm://40.68.240.132:9080/globalFinalDatabase")!)
+                    syncConfiguration: SyncConfiguration(user: user, realmURL: URL(string: "realm://52.166.88.154:9080/globalFinalDatabase")!)
                     
                 )
                 

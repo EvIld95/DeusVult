@@ -8,8 +8,8 @@ target 'DeusVult' do
   # Pods for DeusVult
   pod 'MBProgressHUD', '~> 1.0'
   pod 'RealmSwift'
-  pod 'RxSwift',    '~> 3.0'
-  pod 'RxCocoa',    '~> 3.0'
+  pod 'RxSwift',    '~> 4.0'
+  pod 'RxCocoa',    '~> 4.0'
   pod 'IHKeyboardAvoiding’
   pod 'Charts'
   

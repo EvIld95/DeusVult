@@ -39,7 +39,7 @@ class LoginViewController: UIViewController {
         }
         
         emailTextField.text = "konto@gmail.com"
-        passwordTextField.text = "deus"
+        passwordTextField.text = "qwerty"
         Observable.combineLatest(emailRx, passwordRx).subscribe(onNext: { (email, password) in
             if(email == true && password == true) {
                 self.loginButton.isEnabled = true
@@ -49,6 +49,9 @@ class LoginViewController: UIViewController {
                 self.loginButton.alpha = 0.5
             }
         }).addDisposableTo(disposeBag)
+        
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -78,8 +81,6 @@ class LoginViewController: UIViewController {
     func playBackgroundMusic() {
         self.soundPlayerManager.play(mp3Name: "protector", infiniteLoop: true, extensionFormat: "mp3")
     }
-    
-    
     
 }
 
